@@ -21,16 +21,8 @@ public class TelaInicial extends javax.swing.JFrame {
     public TelaInicial() {
         initComponents();
         setExtendedState(JFrame.MAXIMIZED_BOTH);//765,429
-        scaleImage();
     }
 
-        public void scaleImage(){
-        ImageIcon icon = new ImageIcon("C:\\Users\\bruno\\Downloads\\menu.png");
-        Image img = icon.getImage();
-        Image imgScale = img.getScaledInstance(jLabel1.getWidth(), jLabel1.getHeight(), Image.SCALE_SMOOTH);
-        ImageIcon scaledIcon = new ImageIcon(imgScale);
-        jLabel1.setIcon(scaledIcon);
-        }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -40,16 +32,16 @@ public class TelaInicial extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jLabel1 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
         iniciar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setIconImages(null);
         getContentPane().setLayout(null);
 
-        jLabel1.setIcon(new javax.swing.ImageIcon("C:\\Users\\bruno\\Downloads\\menu.png")); // NOI18N
-        getContentPane().add(jLabel1);
-        jLabel1.setBounds(15, -1, 750, 440);
+        jLabel2.setIcon(new javax.swing.ImageIcon("C:\\Users\\bruno\\Downloads\\menu.png")); // NOI18N
+        getContentPane().add(jLabel2);
+        jLabel2.setBounds(0, 0, 1600, 800);
 
         iniciar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -57,7 +49,7 @@ public class TelaInicial extends javax.swing.JFrame {
             }
         });
         getContentPane().add(iniciar);
-        iniciar.setBounds(300, 340, 160, 40);
+        iniciar.setBounds(610, 600, 380, 110);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -105,6 +97,6 @@ public class TelaInicial extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton iniciar;
-    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     // End of variables declaration//GEN-END:variables
 }
