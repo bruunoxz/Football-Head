@@ -6,6 +6,7 @@ package ads.headfootball;
 
 import javax.swing.JFrame;
 
+
 /**
  *
  * @author bruno
@@ -18,6 +19,7 @@ public class TimePlayer1 extends javax.swing.JFrame {
     public TimePlayer1() {
         initComponents();
         setExtendedState(JFrame.MAXIMIZED_BOTH);
+    
     }
 
     /**
@@ -29,31 +31,39 @@ public class TimePlayer1 extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jLabel3 = new javax.swing.JLabel();
+        direitap1 = new javax.swing.JButton();
+        esquerdap1 = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        getContentPane().setLayout(null);
+
+        jLabel3.setText("jLabel3");
+        getContentPane().add(jLabel3);
+        jLabel3.setBounds(240, 180, 40, 30);
+
+        direitap1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                direitap1ActionPerformed(evt);
+            }
+        });
+        getContentPane().add(direitap1);
+        direitap1.setBounds(560, 190, 50, 60);
+        getContentPane().add(esquerdap1);
+        esquerdap1.setBounds(350, 190, 50, 60);
 
         jLabel1.setIcon(new javax.swing.ImageIcon("C:\\Users\\bruno\\Downloads\\sp.PNG")); // NOI18N
-
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(290, 290, 290)
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 840, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(1901, Short.MAX_VALUE))
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 569, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(669, Short.MAX_VALUE))
-        );
+        getContentPane().add(jLabel1);
+        jLabel1.setBounds(0, 0, 850, 569);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void direitap1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_direitap1ActionPerformed
+        new Corinthiansp1().setVisible(true);
+        dispose();
+    }//GEN-LAST:event_direitap1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -91,6 +101,9 @@ public class TimePlayer1 extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton direitap1;
+    private javax.swing.JButton esquerdap1;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel3;
     // End of variables declaration//GEN-END:variables
 }
