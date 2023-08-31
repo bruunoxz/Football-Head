@@ -8,12 +8,12 @@ package ads.headfootball;
  *
  * @author bruno
  */
-public class Corinthians extends javax.swing.JFrame {
+public class Gremio extends javax.swing.JFrame {
 
     /**
-     * Creates new form Corinthians
+     * Creates new form Gremio
      */
-    public Corinthians() {
+    public Gremio() {
         initComponents();
     }
 
@@ -26,27 +26,15 @@ public class Corinthians extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        voltar = new javax.swing.JLabel();
-        esquerda = new javax.swing.JButton();
         direita = new javax.swing.JButton();
-        jButton1 = new javax.swing.JButton();
+        esquerda = new javax.swing.JButton();
+        voltar = new javax.swing.JButton();
+        prox = new javax.swing.JButton();
+        jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setMinimumSize(new java.awt.Dimension(1400, 788));
         getContentPane().setLayout(null);
-
-        voltar.setIcon(new javax.swing.ImageIcon("C:\\Users\\bruno\\OneDrive\\Documentos\\NetBeansProjects\\HeadFootball\\src\\main\\java\\res\\corinthians.jpg")); // NOI18N
-        getContentPane().add(voltar);
-        voltar.setBounds(0, 0, 1400, 788);
-
-        esquerda.setText("jButton1");
-        esquerda.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                esquerdaActionPerformed(evt);
-            }
-        });
-        getContentPane().add(esquerda);
-        esquerda.setBounds(500, 170, 71, 110);
 
         direita.setText("jButton1");
         direita.addActionListener(new java.awt.event.ActionListener() {
@@ -55,34 +43,50 @@ public class Corinthians extends javax.swing.JFrame {
             }
         });
         getContentPane().add(direita);
-        direita.setBounds(830, 170, 71, 110);
+        direita.setBounds(830, 140, 71, 120);
 
-        jButton1.setText("jButton1");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        esquerda.setText("jButton1");
+        esquerda.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                esquerdaActionPerformed(evt);
             }
         });
-        getContentPane().add(jButton1);
-        jButton1.setBounds(400, 721, 270, 50);
+        getContentPane().add(esquerda);
+        esquerda.setBounds(490, 140, 71, 120);
+
+        voltar.setText("jButton1");
+        voltar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                voltarActionPerformed(evt);
+            }
+        });
+        getContentPane().add(voltar);
+        voltar.setBounds(390, 701, 270, 50);
+
+        prox.setText("jButton2");
+        getContentPane().add(prox);
+        prox.setBounds(720, 700, 290, 60);
+
+        jLabel1.setIcon(new javax.swing.ImageIcon("C:\\Users\\bruno\\OneDrive\\Documentos\\NetBeansProjects\\HeadFootball\\src\\main\\java\\res\\gremio.jpg")); // NOI18N
+        getContentPane().add(jLabel1);
+        jLabel1.setBounds(0, 0, 1400, 790);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        new TelaInicial().setVisible(true);
-        dispose();
-    }//GEN-LAST:event_jButton1ActionPerformed
-
     private void esquerdaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_esquerdaActionPerformed
-        new Botafogop1().setVisible(true);
+        new Flamengo().setVisible(true);
         dispose();
     }//GEN-LAST:event_esquerdaActionPerformed
 
     private void direitaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_direitaActionPerformed
-        new Flamengo().setVisible(true);
-        dispose();
+        // TODO add your handling code here:
     }//GEN-LAST:event_direitaActionPerformed
+
+    private void voltarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_voltarActionPerformed
+        new TelaInicial().setVisible(true);
+        dispose();
+    }//GEN-LAST:event_voltarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -101,20 +105,20 @@ public class Corinthians extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(Corinthians.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Gremio.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(Corinthians.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Gremio.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(Corinthians.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Gremio.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(Corinthians.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Gremio.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new Corinthians().setVisible(true);
+                new Gremio().setVisible(true);
             }
         });
     }
@@ -122,7 +126,8 @@ public class Corinthians extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton direita;
     private javax.swing.JButton esquerda;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JLabel voltar;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JButton prox;
+    private javax.swing.JButton voltar;
     // End of variables declaration//GEN-END:variables
 }

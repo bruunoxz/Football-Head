@@ -30,6 +30,7 @@ public class Flamengo extends javax.swing.JFrame {
         direita = new javax.swing.JButton();
         esquerda = new javax.swing.JButton();
         voltar = new javax.swing.JButton();
+        prox = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setMinimumSize(new java.awt.Dimension(1400, 788));
@@ -40,6 +41,11 @@ public class Flamengo extends javax.swing.JFrame {
         jLabel1.setBounds(0, 0, 1400, 788);
 
         direita.setText("jButton1");
+        direita.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                direitaActionPerformed(evt);
+            }
+        });
         getContentPane().add(direita);
         direita.setBounds(830, 140, 71, 120);
 
@@ -53,15 +59,35 @@ public class Flamengo extends javax.swing.JFrame {
         esquerda.setBounds(500, 140, 71, 120);
 
         voltar.setText("jButton1");
+        voltar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                voltarActionPerformed(evt);
+            }
+        });
         getContentPane().add(voltar);
         voltar.setBounds(400, 700, 270, 60);
+
+        prox.setText("jButton1");
+        getContentPane().add(prox);
+        prox.setBounds(730, 700, 290, 60);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void esquerdaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_esquerdaActionPerformed
         new Corinthians().setVisible(true);
+        dispose();
     }//GEN-LAST:event_esquerdaActionPerformed
+
+    private void direitaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_direitaActionPerformed
+       new Gremio().setVisible(true);
+       dispose();
+    }//GEN-LAST:event_direitaActionPerformed
+
+    private void voltarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_voltarActionPerformed
+       new TelaInicial().setVisible(true);
+       dispose();
+    }//GEN-LAST:event_voltarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -102,6 +128,7 @@ public class Flamengo extends javax.swing.JFrame {
     private javax.swing.JButton direita;
     private javax.swing.JButton esquerda;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JButton prox;
     private javax.swing.JButton voltar;
     // End of variables declaration//GEN-END:variables
 }

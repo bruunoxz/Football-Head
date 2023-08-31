@@ -85,6 +85,7 @@ public class AtleticomgP1 extends javax.swing.JFrame {
         if(flag==false){
             new Botafogop1().setVisible(true);
             flag = true;
+            dispose();
         }else{
             
         }
