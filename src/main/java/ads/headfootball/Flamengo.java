@@ -4,22 +4,17 @@
  */
 package ads.headfootball;
 
-import javax.swing.JFrame;
-
-
 /**
  *
  * @author bruno
  */
-public class TimePlayer1 extends javax.swing.JFrame {
+public class Flamengo extends javax.swing.JFrame {
 
     /**
-     * Creates new form TimePlayer1
+     * Creates new form Flamengo
      */
-    public TimePlayer1() {
+    public Flamengo() {
         initComponents();
-        setExtendedState(JFrame.MAXIMIZED_BOTH);
-    
     }
 
     /**
@@ -31,39 +26,42 @@ public class TimePlayer1 extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jLabel3 = new javax.swing.JLabel();
-        direitap1 = new javax.swing.JButton();
-        esquerdap1 = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
+        direita = new javax.swing.JButton();
+        esquerda = new javax.swing.JButton();
+        voltar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setMinimumSize(new java.awt.Dimension(1400, 788));
         getContentPane().setLayout(null);
 
-        jLabel3.setText("jLabel3");
-        getContentPane().add(jLabel3);
-        jLabel3.setBounds(240, 180, 40, 30);
+        jLabel1.setIcon(new javax.swing.ImageIcon("C:\\Users\\bruno\\OneDrive\\Documentos\\NetBeansProjects\\HeadFootball\\src\\main\\java\\res\\flamengo.jpg")); // NOI18N
+        getContentPane().add(jLabel1);
+        jLabel1.setBounds(0, 0, 1400, 788);
 
-        direitap1.addActionListener(new java.awt.event.ActionListener() {
+        direita.setText("jButton1");
+        getContentPane().add(direita);
+        direita.setBounds(830, 140, 71, 120);
+
+        esquerda.setText("jButton1");
+        esquerda.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                direitap1ActionPerformed(evt);
+                esquerdaActionPerformed(evt);
             }
         });
-        getContentPane().add(direitap1);
-        direitap1.setBounds(560, 190, 50, 60);
-        getContentPane().add(esquerdap1);
-        esquerdap1.setBounds(350, 190, 50, 60);
+        getContentPane().add(esquerda);
+        esquerda.setBounds(500, 140, 71, 120);
 
-        jLabel1.setIcon(new javax.swing.ImageIcon("C:\\Users\\bruno\\Downloads\\sp.PNG")); // NOI18N
-        getContentPane().add(jLabel1);
-        jLabel1.setBounds(0, 0, 850, 569);
+        voltar.setText("jButton1");
+        getContentPane().add(voltar);
+        voltar.setBounds(400, 700, 270, 60);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void direitap1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_direitap1ActionPerformed
-        new Corinthiansp1().setVisible(true);
-        dispose();
-    }//GEN-LAST:event_direitap1ActionPerformed
+    private void esquerdaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_esquerdaActionPerformed
+        new Corinthians().setVisible(true);
+    }//GEN-LAST:event_esquerdaActionPerformed
 
     /**
      * @param args the command line arguments
@@ -82,28 +80,28 @@ public class TimePlayer1 extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(TimePlayer1.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Flamengo.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(TimePlayer1.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Flamengo.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(TimePlayer1.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Flamengo.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(TimePlayer1.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Flamengo.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new TimePlayer1().setVisible(true);
+                new Flamengo().setVisible(true);
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton direitap1;
-    private javax.swing.JButton esquerdap1;
+    private javax.swing.JButton direita;
+    private javax.swing.JButton esquerda;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel3;
+    private javax.swing.JButton voltar;
     // End of variables declaration//GEN-END:variables
 }

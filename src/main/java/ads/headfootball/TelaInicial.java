@@ -18,9 +18,13 @@ public class TelaInicial extends javax.swing.JFrame {
     /**
      * Creates new form TelaInicial
      */
+     //FundoTela tela;
     public TelaInicial() {
         initComponents();
-        setExtendedState(JFrame.MAXIMIZED_BOTH);//765,429
+       /* setExtendedState(JFrame.MAXIMIZED_BOTH);
+        setLayout(new GridLayout());
+        tela = new FundoTela("C:\\\\Users\\\\bruno\\\\OneDrive\\\\Documentos\\\\NetBeansProjects\\\\HeadFootball\\\\src\\\\main\\\\java\\\\res\\\\menu (2).png");
+        getContentPane().add(tela);*/
     }
 
     /**
@@ -36,12 +40,15 @@ public class TelaInicial extends javax.swing.JFrame {
         iniciar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Menu");
         setIconImages(null);
+        setMinimumSize(new java.awt.Dimension(1400, 787));
+        setSize(new java.awt.Dimension(1600, 899));
         getContentPane().setLayout(null);
 
-        jLabel2.setIcon(new javax.swing.ImageIcon("C:\\Users\\bruno\\Downloads\\menu.png")); // NOI18N
+        jLabel2.setIcon(new javax.swing.ImageIcon("C:\\Users\\bruno\\OneDrive\\Documentos\\NetBeansProjects\\HeadFootball\\src\\main\\java\\res\\menu (2).png")); // NOI18N
         getContentPane().add(jLabel2);
-        jLabel2.setBounds(0, 0, 1600, 800);
+        jLabel2.setBounds(0, 0, 1400, 787);
 
         iniciar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -49,14 +56,13 @@ public class TelaInicial extends javax.swing.JFrame {
             }
         });
         getContentPane().add(iniciar);
-        iniciar.setBounds(610, 600, 380, 110);
+        iniciar.setBounds(560, 590, 290, 100);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void iniciarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_iniciarActionPerformed
-        //TimePlayer1 t1 = new TimePlayer1();
-        new TimePlayer1().setVisible(true);
+        new AtleticomgP1().setVisible(true);
         dispose();
     }//GEN-LAST:event_iniciarActionPerformed
 
