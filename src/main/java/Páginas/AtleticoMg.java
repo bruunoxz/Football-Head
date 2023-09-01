@@ -13,12 +13,12 @@ import javax.swing.JOptionPane;
  *
  * @author bruno
  */
-public class AtleticomgP1 extends javax.swing.JFrame {
+public class AtleticoMg extends javax.swing.JFrame {
 
     /**
      * Creates new form Corinthiansp1
      */
-    public AtleticomgP1() {
+    public AtleticoMg() {
         initComponents();
     }
     /**
@@ -86,31 +86,31 @@ public class AtleticomgP1 extends javax.swing.JFrame {
     private void proxp1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_proxp1ActionPerformed
     // Verificar se o personagem "Hulk" já foi escolhido
     GameState gameState = GameState.getInstance();
-    boolean hulkFoiEscolhido = false;
+    boolean escolhido = false;
     
     for (Personagem personagem : gameState.getPersonagensEscolhidos()) {
         if (personagem.getNome().equals("Hulk")) {
-            hulkFoiEscolhido = true;
+            escolhido = true;
             break; // Já encontramos o Hulk na lista, podemos sair do loop
         }
     }
     
-    if (hulkFoiEscolhido) {
-        JOptionPane.showMessageDialog(this, "O personagem Hulk já foi escolhido.", "Informação", JOptionPane.INFORMATION_MESSAGE);
-    } else if(gameState.getPersonagensEscolhidos().size() >= 2){
+    if (escolhido) {
+        JOptionPane.showMessageDialog(this, "Hulk já foi escolhido.", "Informação", JOptionPane.INFORMATION_MESSAGE);
+    } else if(gameState.getPersonagensEscolhidos().size() >= 1){
         new Jogo().setVisible(true);
         dispose();
     }else{
         Personagem personagem1 = new Personagem("Hulk");
         gameState.adicionarPersonagem(personagem1);
-        new Botafogop1().setVisible(true);
+        new Botafogo().setVisible(true);
         dispose();
     }
 
     }//GEN-LAST:event_proxp1ActionPerformed
 
     private void direitaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_direitaActionPerformed
-      new Botafogop1().setVisible(true);
+      new Botafogo().setVisible(true);
       dispose();
     }//GEN-LAST:event_direitaActionPerformed
 
@@ -131,14 +131,18 @@ public class AtleticomgP1 extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(AtleticomgP1.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(AtleticoMg.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(AtleticomgP1.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(AtleticoMg.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(AtleticomgP1.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(AtleticoMg.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(AtleticomgP1.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(AtleticoMg.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
         //</editor-fold>
         //</editor-fold>
         //</editor-fold>
@@ -147,7 +151,7 @@ public class AtleticomgP1 extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new AtleticomgP1().setVisible(true);
+                new AtleticoMg().setVisible(true);
             }
         });
     }

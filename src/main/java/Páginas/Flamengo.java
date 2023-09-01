@@ -4,6 +4,10 @@
  */
 package Páginas;
 
+import Utilitários.GameState;
+import Utilitários.Personagem;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author bruno
@@ -68,6 +72,11 @@ public class Flamengo extends javax.swing.JFrame {
         voltar.setBounds(400, 700, 270, 60);
 
         prox.setText("jButton1");
+        prox.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                proxActionPerformed(evt);
+            }
+        });
         getContentPane().add(prox);
         prox.setBounds(730, 700, 290, 60);
 
@@ -88,6 +97,30 @@ public class Flamengo extends javax.swing.JFrame {
        new TelaInicial().setVisible(true);
        dispose();
     }//GEN-LAST:event_voltarActionPerformed
+
+    private void proxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_proxActionPerformed
+    GameState gameState = GameState.getInstance();
+    boolean escolhido = false;
+    
+    for (Personagem personagem : gameState.getPersonagensEscolhidos()) {
+        if (personagem.getNome().equals("Gabigol")) {
+            escolhido = true;
+            break; 
+        }
+    }
+    
+    if (escolhido) {
+        JOptionPane.showMessageDialog(this, "Gabigol já foi escolhido.", "Informação", JOptionPane.INFORMATION_MESSAGE);
+    } else if(gameState.getPersonagensEscolhidos().size() >= 1){
+        new Jogo().setVisible(true);
+        dispose();
+    }else{
+        Personagem personagem4 = new Personagem("Gabigol");
+        gameState.adicionarPersonagem(personagem4);
+        new Gremio().setVisible(true);
+        dispose();
+    }
+    }//GEN-LAST:event_proxActionPerformed
 
     /**
      * @param args the command line arguments

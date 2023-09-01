@@ -4,19 +4,22 @@
  */
 package Páginas;
 
+import Utilitários.GameState;
+import Utilitários.Personagem;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 
 
 /**
  *
  * @author bruno
  */
-public class Botafogop1 extends javax.swing.JFrame {
+public class Botafogo extends javax.swing.JFrame {
 
     /**
      * Creates new form TimePlayer1
      */
-    public Botafogop1() {
+    public Botafogo() {
         initComponents();
     }
 
@@ -54,6 +57,11 @@ public class Botafogop1 extends javax.swing.JFrame {
         voltar.setBounds(390, 701, 260, 60);
 
         prox.setText("jButton1");
+        prox.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                proxActionPerformed(evt);
+            }
+        });
         getContentPane().add(prox);
         prox.setBounds(730, 700, 280, 60);
 
@@ -79,7 +87,7 @@ public class Botafogop1 extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void esquerdaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_esquerdaActionPerformed
-       new AtleticomgP1().setVisible(true);
+       new AtleticoMg().setVisible(true);
        dispose();
     }//GEN-LAST:event_esquerdaActionPerformed
 
@@ -92,6 +100,30 @@ public class Botafogop1 extends javax.swing.JFrame {
         new Corinthians().setVisible(true); 
         dispose();
     }//GEN-LAST:event_direitaActionPerformed
+
+    private void proxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_proxActionPerformed
+    GameState gameState = GameState.getInstance();
+    boolean escolhido = false;
+    
+    for (Personagem personagem : gameState.getPersonagensEscolhidos()) {
+        if (personagem.getNome().equals("Tiquinho")) {
+            escolhido = true;
+            break; 
+        }
+    }
+    
+    if (escolhido) {
+        JOptionPane.showMessageDialog(this, "Tiquinho já foi escolhido.", "Informação", JOptionPane.INFORMATION_MESSAGE);
+    } else if(gameState.getPersonagensEscolhidos().size() >= 1){
+        new Jogo().setVisible(true);
+        dispose();
+    }else{
+        Personagem personagem2 = new Personagem("Tiquinho");
+        gameState.adicionarPersonagem(personagem2);
+        new Corinthians().setVisible(true);
+        dispose();
+    }
+    }//GEN-LAST:event_proxActionPerformed
 
     /**
      * @param args the command line arguments
@@ -110,21 +142,23 @@ public class Botafogop1 extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(Botafogop1.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Botafogo.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(Botafogop1.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Botafogo.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(Botafogop1.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Botafogo.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(Botafogop1.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Botafogo.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+        //</editor-fold>
         //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new Botafogop1().setVisible(true);
+                new Botafogo().setVisible(true);
             }
         });
     }

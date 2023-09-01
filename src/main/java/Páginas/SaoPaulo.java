@@ -4,6 +4,10 @@
  */
 package Páginas;
 
+import Utilitários.GameState;
+import Utilitários.Personagem;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author bruno
@@ -50,6 +54,11 @@ public class SaoPaulo extends javax.swing.JFrame {
         voltar.setBounds(390, 701, 270, 50);
 
         prox.setText("jButton1");
+        prox.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                proxActionPerformed(evt);
+            }
+        });
         getContentPane().add(prox);
         prox.setBounds(720, 700, 280, 60);
 
@@ -80,7 +89,7 @@ public class SaoPaulo extends javax.swing.JFrame {
     }//GEN-LAST:event_voltarActionPerformed
 
     private void direitaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_direitaActionPerformed
-        new AtleticomgP1().setVisible(true);
+        new AtleticoMg().setVisible(true);
         dispose();
     }//GEN-LAST:event_direitaActionPerformed
 
@@ -88,6 +97,30 @@ public class SaoPaulo extends javax.swing.JFrame {
         new Santos().setVisible(true);
         dispose();
     }//GEN-LAST:event_esquerdaActionPerformed
+
+    private void proxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_proxActionPerformed
+        GameState gameState = GameState.getInstance();
+        boolean escolhido = false;
+
+        for (Personagem personagem : gameState.getPersonagensEscolhidos()) {
+            if (personagem.getNome().equals("Luciano")) {
+                escolhido = true;
+                break; 
+            }
+        }
+
+        if (escolhido) {
+            JOptionPane.showMessageDialog(this, "Luciano já foi escolhido.", "Informação", JOptionPane.INFORMATION_MESSAGE);
+        } else if(gameState.getPersonagensEscolhidos().size() >= 1){
+            new Jogo().setVisible(true);
+            dispose();
+        }else{
+            Personagem personagem9 = new Personagem("Luciano");
+            gameState.adicionarPersonagem(personagem9);
+            new AtleticoMg().setVisible(true);
+            dispose();
+        }
+    }//GEN-LAST:event_proxActionPerformed
 
     /**
      * @param args the command line arguments

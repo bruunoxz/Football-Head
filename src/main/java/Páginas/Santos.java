@@ -4,6 +4,10 @@
  */
 package Páginas;
 
+import Utilitários.GameState;
+import Utilitários.Personagem;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author bruno
@@ -50,6 +54,11 @@ public class Santos extends javax.swing.JFrame {
         voltar.setBounds(390, 711, 270, 40);
 
         prox.setText("jButton2");
+        prox.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                proxActionPerformed(evt);
+            }
+        });
         getContentPane().add(prox);
         prox.setBounds(730, 711, 280, 50);
 
@@ -87,6 +96,30 @@ public class Santos extends javax.swing.JFrame {
     private void direitaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_direitaActionPerformed
        new SaoPaulo().setVisible(true);
     }//GEN-LAST:event_direitaActionPerformed
+
+    private void proxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_proxActionPerformed
+        GameState gameState = GameState.getInstance();
+        boolean escolhido = false;
+
+        for (Personagem personagem : gameState.getPersonagensEscolhidos()) {
+            if (personagem.getNome().equals("Soteldo")) {
+                escolhido = true;
+                break; 
+            }
+        }
+
+        if (escolhido) {
+            JOptionPane.showMessageDialog(this, "Soteldo já foi escolhido.", "Informação", JOptionPane.INFORMATION_MESSAGE);
+        } else if(gameState.getPersonagensEscolhidos().size() >= 1){
+            new Jogo().setVisible(true);
+            dispose();
+        }else{
+            Personagem personagem8 = new Personagem("Soteldo");
+            gameState.adicionarPersonagem(personagem8);
+            new Flamengo().setVisible(true);
+            dispose();
+        }
+    }//GEN-LAST:event_proxActionPerformed
 
     /**
      * @param args the command line arguments

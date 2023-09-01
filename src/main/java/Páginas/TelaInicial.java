@@ -62,7 +62,7 @@ public class TelaInicial extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void iniciarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_iniciarActionPerformed
-        new AtleticomgP1().setVisible(true);
+        new AtleticoMg().setVisible(true);
         dispose();
     }//GEN-LAST:event_iniciarActionPerformed
 

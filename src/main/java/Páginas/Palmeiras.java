@@ -4,6 +4,10 @@
  */
 package Páginas;
 
+import Utilitários.GameState;
+import Utilitários.Personagem;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author bruno
@@ -28,7 +32,7 @@ public class Palmeiras extends javax.swing.JFrame {
 
         jLabel2 = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
+        prox = new javax.swing.JButton();
         voltar = new javax.swing.JButton();
         direita = new javax.swing.JButton();
         esquerda = new javax.swing.JButton();
@@ -45,9 +49,14 @@ public class Palmeiras extends javax.swing.JFrame {
         getContentPane().add(jLabel1);
         jLabel1.setBounds(0, 0, 1400, 788);
 
-        jButton1.setText("jButton1");
-        getContentPane().add(jButton1);
-        jButton1.setBounds(740, 701, 260, 50);
+        prox.setText("jButton1");
+        prox.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                proxActionPerformed(evt);
+            }
+        });
+        getContentPane().add(prox);
+        prox.setBounds(740, 701, 260, 50);
 
         voltar.setText("jButton2");
         voltar.addActionListener(new java.awt.event.ActionListener() {
@@ -94,6 +103,30 @@ public class Palmeiras extends javax.swing.JFrame {
        dispose();
     }//GEN-LAST:event_direitaActionPerformed
 
+    private void proxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_proxActionPerformed
+        GameState gameState = GameState.getInstance();
+        boolean escolhido = false;
+
+        for (Personagem personagem : gameState.getPersonagensEscolhidos()) {
+            if (personagem.getNome().equals("Rony")) {
+                escolhido = true;
+                break; 
+            }
+        }
+
+        if (escolhido) {
+            JOptionPane.showMessageDialog(this, "Rony já foi escolhido.", "Informação", JOptionPane.INFORMATION_MESSAGE);
+        } else if(gameState.getPersonagensEscolhidos().size() >= 1){
+            new Jogo().setVisible(true);
+            dispose();
+        }else{
+            Personagem personagem7 = new Personagem("Rony");
+            gameState.adicionarPersonagem(personagem7);
+            new Santos().setVisible(true);
+            dispose();
+        }
+    }//GEN-LAST:event_proxActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -132,9 +165,9 @@ public class Palmeiras extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton direita;
     private javax.swing.JButton esquerda;
-    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JButton prox;
     private javax.swing.JButton voltar;
     // End of variables declaration//GEN-END:variables
 }

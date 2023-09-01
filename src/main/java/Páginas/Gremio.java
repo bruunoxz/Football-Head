@@ -4,6 +4,10 @@
  */
 package Páginas;
 
+import Utilitários.GameState;
+import Utilitários.Personagem;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author bruno
@@ -68,6 +72,11 @@ public class Gremio extends javax.swing.JFrame {
         voltar.setBounds(390, 701, 270, 50);
 
         prox.setText("jButton2");
+        prox.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                proxActionPerformed(evt);
+            }
+        });
         getContentPane().add(prox);
         prox.setBounds(720, 700, 290, 60);
 
@@ -88,6 +97,30 @@ public class Gremio extends javax.swing.JFrame {
         new TelaInicial().setVisible(true);
         dispose();
     }//GEN-LAST:event_voltarActionPerformed
+
+    private void proxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_proxActionPerformed
+    GameState gameState = GameState.getInstance();
+    boolean escolhido = false;
+    
+    for (Personagem personagem : gameState.getPersonagensEscolhidos()) {
+        if (personagem.getNome().equals("Luis Suarez")) {
+            escolhido = true;
+            break; 
+        }
+    }
+    
+    if (escolhido) {
+        JOptionPane.showMessageDialog(this, "Luis Suarez já foi escolhido.", "Informação", JOptionPane.INFORMATION_MESSAGE);
+    } else if(gameState.getPersonagensEscolhidos().size() >= 1){
+        new Jogo().setVisible(true);
+        dispose();
+    }else{
+        Personagem personagem5 = new Personagem("Luis Suarez");
+        gameState.adicionarPersonagem(personagem5);
+        new Internacional().setVisible(true);
+        dispose();
+    }
+    }//GEN-LAST:event_proxActionPerformed
 
     /**
      * @param args the command line arguments

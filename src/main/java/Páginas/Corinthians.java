@@ -4,6 +4,10 @@
  */
 package Páginas;
 
+import Utilitários.GameState;
+import Utilitários.Personagem;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author bruno
@@ -26,18 +30,19 @@ public class Corinthians extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        voltar = new javax.swing.JLabel();
+        jLabel = new javax.swing.JLabel();
         esquerda = new javax.swing.JButton();
         direita = new javax.swing.JButton();
-        jButton1 = new javax.swing.JButton();
+        voltar = new javax.swing.JButton();
+        prox = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setMinimumSize(new java.awt.Dimension(1400, 788));
         getContentPane().setLayout(null);
 
-        voltar.setIcon(new javax.swing.ImageIcon("C:\\Users\\bruno\\OneDrive\\Documentos\\NetBeansProjects\\HeadFootball\\src\\main\\java\\res\\corinthians.jpg")); // NOI18N
-        getContentPane().add(voltar);
-        voltar.setBounds(0, 0, 1400, 788);
+        jLabel.setIcon(new javax.swing.ImageIcon("C:\\Users\\bruno\\OneDrive\\Documentos\\NetBeansProjects\\HeadFootball\\src\\main\\java\\res\\corinthians.jpg")); // NOI18N
+        getContentPane().add(jLabel);
+        jLabel.setBounds(0, 0, 1400, 788);
 
         esquerda.setText("jButton1");
         esquerda.addActionListener(new java.awt.event.ActionListener() {
@@ -57,25 +62,34 @@ public class Corinthians extends javax.swing.JFrame {
         getContentPane().add(direita);
         direita.setBounds(830, 170, 71, 110);
 
-        jButton1.setText("jButton1");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        voltar.setText("jButton1");
+        voltar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                voltarActionPerformed(evt);
             }
         });
-        getContentPane().add(jButton1);
-        jButton1.setBounds(400, 721, 270, 50);
+        getContentPane().add(voltar);
+        voltar.setBounds(400, 721, 270, 50);
+
+        prox.setText("jButton1");
+        prox.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                proxActionPerformed(evt);
+            }
+        });
+        getContentPane().add(prox);
+        prox.setBounds(740, 721, 270, 50);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void voltarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_voltarActionPerformed
         new TelaInicial().setVisible(true);
         dispose();
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_voltarActionPerformed
 
     private void esquerdaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_esquerdaActionPerformed
-        new Botafogop1().setVisible(true);
+        new Botafogo().setVisible(true);
         dispose();
     }//GEN-LAST:event_esquerdaActionPerformed
 
@@ -83,6 +97,30 @@ public class Corinthians extends javax.swing.JFrame {
         new Flamengo().setVisible(true);
         dispose();
     }//GEN-LAST:event_direitaActionPerformed
+
+    private void proxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_proxActionPerformed
+    GameState gameState = GameState.getInstance();
+    boolean escolhido = false;
+    
+    for (Personagem personagem : gameState.getPersonagensEscolhidos()) {
+        if (personagem.getNome().equals("Yuri Alberto")) {
+            escolhido = true;
+            break; 
+        }
+    }
+    
+    if (escolhido) {
+        JOptionPane.showMessageDialog(this, "Yuri Alberto já foi escolhido.", "Informação", JOptionPane.INFORMATION_MESSAGE);
+    } else if(gameState.getPersonagensEscolhidos().size() >= 1){
+        new Jogo().setVisible(true);
+        dispose();
+    }else{
+        Personagem personagem3 = new Personagem("Yuri Alberto");
+        gameState.adicionarPersonagem(personagem3);
+        new Flamengo().setVisible(true);
+        dispose();
+    }
+    }//GEN-LAST:event_proxActionPerformed
 
     /**
      * @param args the command line arguments
@@ -122,7 +160,8 @@ public class Corinthians extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton direita;
     private javax.swing.JButton esquerda;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JLabel voltar;
+    private javax.swing.JLabel jLabel;
+    private javax.swing.JButton prox;
+    private javax.swing.JButton voltar;
     // End of variables declaration//GEN-END:variables
 }
