@@ -6,6 +6,7 @@ package Páginas;
 
 import Utilitários.GameState;
 import Utilitários.Personagem;
+import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 
 /**
@@ -117,10 +118,11 @@ public class Palmeiras extends javax.swing.JFrame {
         if (escolhido) {
             JOptionPane.showMessageDialog(this, "Rony já foi escolhido.", "Informação", JOptionPane.INFORMATION_MESSAGE);
         } else if(gameState.getPersonagensEscolhidos().size() >= 1){
+            Personagem personagem7 = new Personagem("Rony", new ImageIcon("C:\\Users\\bruno\\OneDrive\\Documentos\\NetBeansProjects\\HeadFootball\\src\\main\\java\\res\\rony.png"));
             new Jogo().setVisible(true);
             dispose();
         }else{
-            Personagem personagem7 = new Personagem("Rony");
+            Personagem personagem7 = new Personagem("Rony", new ImageIcon("C:\\Users\\bruno\\OneDrive\\Documentos\\NetBeansProjects\\HeadFootball\\src\\main\\java\\res\\rony.png"));
             gameState.adicionarPersonagem(personagem7);
             new Santos().setVisible(true);
             dispose();

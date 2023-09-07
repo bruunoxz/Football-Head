@@ -6,6 +6,7 @@ package Páginas;
 
 import Utilitários.GameState;
 import Utilitários.Personagem;
+import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 
 /**
@@ -112,10 +113,11 @@ public class Flamengo extends javax.swing.JFrame {
     if (escolhido) {
         JOptionPane.showMessageDialog(this, "Gabigol já foi escolhido.", "Informação", JOptionPane.INFORMATION_MESSAGE);
     } else if(gameState.getPersonagensEscolhidos().size() >= 1){
+        Personagem personagem4 = new Personagem("Gabigol", new ImageIcon("C:\\Users\\bruno\\OneDrive\\Documentos\\NetBeansProjects\\HeadFootball\\src\\main\\java\\res\\gabigol.png"));
         new Jogo().setVisible(true);
         dispose();
     }else{
-        Personagem personagem4 = new Personagem("Gabigol");
+        Personagem personagem4 = new Personagem("Gabigol", new ImageIcon("C:\\Users\\bruno\\OneDrive\\Documentos\\NetBeansProjects\\HeadFootball\\src\\main\\java\\res\\gabigol.png"));
         gameState.adicionarPersonagem(personagem4);
         new Gremio().setVisible(true);
         dispose();

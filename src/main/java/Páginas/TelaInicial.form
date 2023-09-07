@@ -38,7 +38,7 @@
     <Component class="javax.swing.JLabel" name="jLabel2">
       <Properties>
         <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-          <Image iconType="2" name="C:\Users\bruno\OneDrive\Documentos\NetBeansProjects\HeadFootball\src\main\java\res\menu (2).png"/>
+          <Image iconType="2" name="C:\Users\bruno\OneDrive\Documentos\NetBeansProjects\HeadFootball\src\main\java\res\menu.png"/>
         </Property>
       </Properties>
       <Constraints>

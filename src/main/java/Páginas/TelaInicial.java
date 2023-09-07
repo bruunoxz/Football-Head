@@ -46,7 +46,7 @@ public class TelaInicial extends javax.swing.JFrame {
         setSize(new java.awt.Dimension(1600, 899));
         getContentPane().setLayout(null);
 
-        jLabel2.setIcon(new javax.swing.ImageIcon("C:\\Users\\bruno\\OneDrive\\Documentos\\NetBeansProjects\\HeadFootball\\src\\main\\java\\res\\menu (2).png")); // NOI18N
+        jLabel2.setIcon(new javax.swing.ImageIcon("C:\\Users\\bruno\\OneDrive\\Documentos\\NetBeansProjects\\HeadFootball\\src\\main\\java\\res\\menu.png")); // NOI18N
         getContentPane().add(jLabel2);
         jLabel2.setBounds(0, 0, 1400, 787);
 

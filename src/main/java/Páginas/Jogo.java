@@ -4,6 +4,13 @@
  */
 package Páginas;
 
+import Utilitários.GameState;
+import Utilitários.Personagem;
+import java.awt.List;
+import java.util.ArrayList;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+
 /**
  *
  * @author bruno
@@ -15,6 +22,26 @@ public class Jogo extends javax.swing.JFrame {
      */
     public Jogo() {
         initComponents();
+        
+        GameState gameState = GameState.getInstance();
+        if (!gameState.getPersonagensEscolhidos().isEmpty()) {
+            Personagem personagem = gameState.getPersonagensEscolhidos().get(0);
+            if (personagem != null && personagem.getImagem() != null) {
+                // Defina a imagem do JLabel com base no primeiro personagem escolhido
+                jogador1.setIcon(personagem.getImagem());
+            }
+             /* Verificar se há pelo menos dois personagens escolhidos
+            if (gameState.getPersonagensEscolhidos().size() >= 2) {
+                // Obter o segundo personagem
+                Personagem personagem2 = gameState.getPersonagensEscolhidos().get(1);
+                if (personagem2 != null && personagem2.getImagem() != null) {
+                    // Defina a imagem do segundo personagem na segunda JLabel
+                    jogador2.setIcon(personagem2.getImagem());
+                
+        }
+    }*/
+        }
+ 
     }
 
     /**
@@ -26,27 +53,26 @@ public class Jogo extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jLabel1 = new javax.swing.JLabel();
+        jogador1 = new javax.swing.JLabel();
+        jogador2 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setMinimumSize(new java.awt.Dimension(1400, 788));
+        getContentPane().setLayout(null);
+        getContentPane().add(jogador1);
+        jogador1.setBounds(120, 590, 250, 179);
+        getContentPane().add(jogador2);
+        jogador2.setBounds(1020, 590, 250, 179);
 
-        jLabel1.setIcon(new javax.swing.ImageIcon("C:\\Users\\bruno\\OneDrive\\Documentos\\NetBeansProjects\\HeadFootball\\src\\main\\java\\res\\fundojogo.jpg")); // NOI18N
+        jLabel3.setIcon(new javax.swing.ImageIcon("C:\\Users\\bruno\\OneDrive\\Documentos\\NetBeansProjects\\HeadFootball\\src\\main\\java\\res\\gabigol.png")); // NOI18N
+        getContentPane().add(jLabel3);
+        jLabel3.setBounds(650, 590, 250, 179);
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 1400, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 788, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
-        );
+        jLabel2.setIcon(new javax.swing.ImageIcon("C:\\Users\\bruno\\OneDrive\\Documentos\\NetBeansProjects\\HeadFootball\\src\\main\\java\\res\\fundojogo.jpg")); // NOI18N
+        getContentPane().add(jLabel2);
+        jLabel2.setBounds(0, 0, 1400, 788);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -87,6 +113,9 @@ public class Jogo extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jogador1;
+    private javax.swing.JLabel jogador2;
     // End of variables declaration//GEN-END:variables
 }

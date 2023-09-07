@@ -6,6 +6,7 @@ package Páginas;
 
 import Utilitários.GameState;
 import Utilitários.Personagem;
+import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
@@ -101,7 +102,7 @@ public class AtleticoMg extends javax.swing.JFrame {
         new Jogo().setVisible(true);
         dispose();
     }else{
-        Personagem personagem1 = new Personagem("Hulk");
+        Personagem personagem1 = new Personagem("Hulk", new ImageIcon("C:\\Users\\bruno\\OneDrive\\Documentos\\NetBeansProjects\\HeadFootball\\src\\main\\java\\res\\hulk.png"));
         gameState.adicionarPersonagem(personagem1);
         new Botafogo().setVisible(true);
         dispose();
