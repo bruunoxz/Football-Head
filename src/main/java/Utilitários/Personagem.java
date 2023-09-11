@@ -16,9 +16,8 @@ public class Personagem {
             this.imagem = imagem;
         }else{
             this.imagem = espelharHorizontalmente(imagem);
-        }
     }
-
+    }
     public String getNome() {
         return nome;
     }

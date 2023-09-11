@@ -115,14 +115,16 @@ public class Botafogo extends javax.swing.JFrame {
     
     if (escolhido) {
         JOptionPane.showMessageDialog(this, "Tiquinho já foi escolhido.", "Informação", JOptionPane.INFORMATION_MESSAGE);
-    } else if(gameState.getPersonagensEscolhidos().size() >= 1){
-        Personagem personagem2 = new Personagem("Tiquinho", new ImageIcon("C:\\Users\\bruno\\OneDrive\\Documentos\\NetBeansProjects\\HeadFootball\\src\\main\\java\\res\tiquinho.png"));
-        new Jogo().setVisible(true);
-        dispose();
-    }else{
+    } else if(gameState.getPersonagensEscolhidos().isEmpty()){
         Personagem personagem2 = new Personagem("Tiquinho", new ImageIcon("C:\\Users\\bruno\\OneDrive\\Documentos\\NetBeansProjects\\HeadFootball\\src\\main\\java\\res\\tiquinho.png"));
         gameState.adicionarPersonagem(personagem2);
         new Corinthians().setVisible(true);
+        dispose();
+        
+    }else{
+        Personagem personagem2 = new Personagem("Tiquinho", new ImageIcon("C:\\Users\\bruno\\OneDrive\\Documentos\\NetBeansProjects\\HeadFootball\\src\\main\\java\\res\\tiquinho.png"));
+        gameState.adicionarPersonagem(personagem2);
+        new Jogo().setVisible(true);
         dispose();
     }
     }//GEN-LAST:event_proxActionPerformed

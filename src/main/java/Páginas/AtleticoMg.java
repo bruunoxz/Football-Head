@@ -73,6 +73,11 @@ public class AtleticoMg extends javax.swing.JFrame {
         direita.setBounds(830, 150, 80, 110);
 
         esquerda.setText("jButton3");
+        esquerda.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                esquerdaActionPerformed(evt);
+            }
+        });
         getContentPane().add(esquerda);
         esquerda.setBounds(491, 150, 80, 110);
 
@@ -99,6 +104,8 @@ public class AtleticoMg extends javax.swing.JFrame {
     if (escolhido) {
         JOptionPane.showMessageDialog(this, "Hulk já foi escolhido.", "Informação", JOptionPane.INFORMATION_MESSAGE);
     } else if(gameState.getPersonagensEscolhidos().size() >= 1){
+        Personagem personagem1 = new Personagem("Hulk", new ImageIcon("C:\\Users\\bruno\\OneDrive\\Documentos\\NetBeansProjects\\HeadFootball\\src\\main\\java\\res\\hulk.png"));
+        gameState.adicionarPersonagem(personagem1);
         new Jogo().setVisible(true);
         dispose();
     }else{
@@ -114,6 +121,11 @@ public class AtleticoMg extends javax.swing.JFrame {
       new Botafogo().setVisible(true);
       dispose();
     }//GEN-LAST:event_direitaActionPerformed
+
+    private void esquerdaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_esquerdaActionPerformed
+        new SaoPaulo().setVisible(true);
+        dispose();
+    }//GEN-LAST:event_esquerdaActionPerformed
 
     /**
      * @param args the command line arguments

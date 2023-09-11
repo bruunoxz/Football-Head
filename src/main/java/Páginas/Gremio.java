@@ -114,6 +114,7 @@ public class Gremio extends javax.swing.JFrame {
         JOptionPane.showMessageDialog(this, "Luis Suarez já foi escolhido.", "Informação", JOptionPane.INFORMATION_MESSAGE);
     } else if(gameState.getPersonagensEscolhidos().size() >= 1){
         Personagem personagem5 = new Personagem("Luis Suarez", new ImageIcon("C:\\Users\\bruno\\OneDrive\\Documentos\\NetBeansProjects\\HeadFootball\\src\\main\\java\\res\\suarez.png"));
+        gameState.adicionarPersonagem(personagem5);
         new Jogo().setVisible(true);
         dispose();
     }else{

@@ -114,6 +114,7 @@ public class Flamengo extends javax.swing.JFrame {
         JOptionPane.showMessageDialog(this, "Gabigol já foi escolhido.", "Informação", JOptionPane.INFORMATION_MESSAGE);
     } else if(gameState.getPersonagensEscolhidos().size() >= 1){
         Personagem personagem4 = new Personagem("Gabigol", new ImageIcon("C:\\Users\\bruno\\OneDrive\\Documentos\\NetBeansProjects\\HeadFootball\\src\\main\\java\\res\\gabigol.png"));
+        gameState.adicionarPersonagem(personagem4);
         new Jogo().setVisible(true);
         dispose();
     }else{
