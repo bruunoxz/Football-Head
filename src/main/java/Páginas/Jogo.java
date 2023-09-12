@@ -24,14 +24,13 @@ public class Jogo extends javax.swing.JFrame {
     public Jogo() {
         initComponents();
 
-         GameState gameState = GameState.getInstance();
+        GameState gameState = GameState.getInstance();
         if (!gameState.getPersonagensEscolhidos().isEmpty()) {
             Personagem personagem = gameState.getPersonagensEscolhidos().get(0);
             if (personagem != null && personagem.getImagem() != null) {
-            // Defina a imagem do JLabel com base no primeiro personagem escolhido
-            jogador1.setIcon(personagem.getImagem());
+                //Defina a imagem do JLabel com base no primeiro personagem escolhido
+                jogador1.setIcon(personagem.getImagem());
             }
-        
         // Verificar se há pelo menos dois personagens escolhidos
         if (gameState.getPersonagensEscolhidos().size() >= 2) {
             // Obter o segundo personagem
@@ -41,7 +40,6 @@ public class Jogo extends javax.swing.JFrame {
             }
         }
     }
- 
     }
 
     /**
@@ -55,6 +53,7 @@ public class Jogo extends javax.swing.JFrame {
 
         jogador1 = new javax.swing.JLabel();
         jogador2 = new javax.swing.JLabel();
+        bola = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -64,6 +63,10 @@ public class Jogo extends javax.swing.JFrame {
         jogador1.setBounds(120, 590, 250, 179);
         getContentPane().add(jogador2);
         jogador2.setBounds(1020, 590, 250, 179);
+
+        bola.setIcon(new javax.swing.ImageIcon("C:\\Users\\bruno\\OneDrive\\Documentos\\NetBeansProjects\\HeadFootball\\src\\main\\java\\res\\bola.png")); // NOI18N
+        getContentPane().add(bola);
+        bola.setBounds(660, 650, 75, 75);
 
         jLabel2.setIcon(new javax.swing.ImageIcon("C:\\Users\\bruno\\OneDrive\\Documentos\\NetBeansProjects\\HeadFootball\\src\\main\\java\\res\\fundojogo.jpg")); // NOI18N
         getContentPane().add(jLabel2);
@@ -108,6 +111,7 @@ public class Jogo extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel bola;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jogador1;
     private javax.swing.JLabel jogador2;
