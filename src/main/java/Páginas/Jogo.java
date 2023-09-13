@@ -7,6 +7,8 @@ package Páginas;
 import Utilitários.GameState;
 import Utilitários.Personagem;
 import java.awt.List;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
@@ -17,13 +19,14 @@ import javax.swing.JLabel;
  * @author bruno
  */
 public class Jogo extends javax.swing.JFrame {
-
+    private boolean tabPressed1;
+    private boolean tabPressed2;
+    
     /**
      * Creates new form Jogo
      */
     public Jogo() {
         initComponents();
-
         GameState gameState = GameState.getInstance();
         if (!gameState.getPersonagensEscolhidos().isEmpty()) {
             Personagem personagem = gameState.getPersonagensEscolhidos().get(0);
@@ -40,7 +43,59 @@ public class Jogo extends javax.swing.JFrame {
             }
         }
     }
+            addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyPressed(KeyEvent e) {
+                if (e.getKeyCode() == KeyEvent.VK_Q) {
+                    tabPressed1 = true;
+                    atualizarImagem();
+                }else if(e.getKeyCode() == KeyEvent.VK_P){
+                    tabPressed2 = true;
+                    atualizarImagem();
+                }
+            }
+
+            @Override
+            public void keyReleased(KeyEvent e) {
+                if (e.getKeyCode() == KeyEvent.VK_Q) {
+                    tabPressed1 = false;
+                    atualizarImagem();
+                }else if(e.getKeyCode() == KeyEvent.VK_P){
+                    tabPressed2 = false;
+                    atualizarImagem();
+                }
+            }
+        });
+
+        // Outras inicializações e configurações
     }
+
+    private void atualizarImagem() {
+        GameState gameState = GameState.getInstance();
+        if (!gameState.getPersonagensEscolhidos().isEmpty()) {
+            Personagem personagem = gameState.getPersonagensEscolhidos().get(0);
+            Personagem personagem2 = gameState.getPersonagensEscolhidos().get(1);
+            if (personagem != null && personagem2 != null) {
+                // Obter a imagem2 do personagem
+                ImageIcon chutep1 = personagem.getImagem2();
+                ImageIcon chutep2 = personagem2.getImagem2();
+                if (tabPressed1 && chutep1 != null) {
+                    jogador1.setIcon(chutep1);
+                } else {
+                    jogador1.setIcon(personagem.getImagem());
+                }
+                if(tabPressed2 && chutep2 !=null){
+                    jogador2.setIcon(chutep2);
+                }else{
+                    jogador2.setIcon(personagem2.getImagem());
+                }
+            }
+        }
+    }
+    
+
+
+
 
     /**
      * This method is called from within the constructor to initialize the form.

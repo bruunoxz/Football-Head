@@ -104,12 +104,14 @@ public class AtleticoMg extends javax.swing.JFrame {
     if (escolhido) {
         JOptionPane.showMessageDialog(this, "Hulk já foi escolhido.", "Informação", JOptionPane.INFORMATION_MESSAGE);
     } else if(gameState.getPersonagensEscolhidos().size() >= 1){
-        Personagem personagem1 = new Personagem("Hulk", new ImageIcon("C:\\Users\\bruno\\OneDrive\\Documentos\\NetBeansProjects\\HeadFootball\\src\\main\\java\\res\\hulk.png"));
+        Personagem personagem1 = new Personagem("Hulk", new ImageIcon("C:\\Users\\bruno\\OneDrive\\Documentos\\NetBeansProjects\\HeadFootball\\src\\main\\java\\res\\hulk.png"),
+        new ImageIcon("C:\\Users\\bruno\\OneDrive\\Documentos\\NetBeansProjects\\HeadFootball\\src\\main\\java\\res\\hulkchutando.png"));
         gameState.adicionarPersonagem(personagem1);
         new Jogo().setVisible(true);
         dispose();
     }else{
-        Personagem personagem1 = new Personagem("Hulk", new ImageIcon("C:\\Users\\bruno\\OneDrive\\Documentos\\NetBeansProjects\\HeadFootball\\src\\main\\java\\res\\hulk.png"));
+        Personagem personagem1 = new Personagem("Hulk", new ImageIcon("C:\\Users\\bruno\\OneDrive\\Documentos\\NetBeansProjects\\HeadFootball\\src\\main\\java\\res\\hulk.png"),
+        new ImageIcon("C:\\Users\\bruno\\OneDrive\\Documentos\\NetBeansProjects\\HeadFootball\\src\\main\\java\\res\\hulkchutando.png"));
         gameState.adicionarPersonagem(personagem1);
         new Botafogo().setVisible(true);
         dispose();

@@ -116,13 +116,15 @@ public class Botafogo extends javax.swing.JFrame {
     if (escolhido) {
         JOptionPane.showMessageDialog(this, "Tiquinho já foi escolhido.", "Informação", JOptionPane.INFORMATION_MESSAGE);
     } else if(gameState.getPersonagensEscolhidos().isEmpty()){
-        Personagem personagem2 = new Personagem("Tiquinho", new ImageIcon("C:\\Users\\bruno\\OneDrive\\Documentos\\NetBeansProjects\\HeadFootball\\src\\main\\java\\res\\tiquinho.png"));
+        Personagem personagem2 = new Personagem("Tiquinho", new ImageIcon("C:\\Users\\bruno\\OneDrive\\Documentos\\NetBeansProjects\\HeadFootball\\src\\main\\java\\res\\tiquinho.png"),
+        new ImageIcon("C:\\Users\\bruno\\OneDrive\\Documentos\\NetBeansProjects\\HeadFootball\\src\\main\\java\\res\\tiquinhochutando.png"));
         gameState.adicionarPersonagem(personagem2);
         new Corinthians().setVisible(true);
         dispose();
         
     }else{
-        Personagem personagem2 = new Personagem("Tiquinho", new ImageIcon("C:\\Users\\bruno\\OneDrive\\Documentos\\NetBeansProjects\\HeadFootball\\src\\main\\java\\res\\tiquinho.png"));
+        Personagem personagem2 = new Personagem("Tiquinho", new ImageIcon("C:\\Users\\bruno\\OneDrive\\Documentos\\NetBeansProjects\\HeadFootball\\src\\main\\java\\res\\tiquinho.png"),
+        new ImageIcon("C:\\Users\\bruno\\OneDrive\\Documentos\\NetBeansProjects\\HeadFootball\\src\\main\\java\\res\\tiquinhochutando.png"));
         gameState.adicionarPersonagem(personagem2);
         new Jogo().setVisible(true);
         dispose();

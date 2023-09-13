@@ -113,12 +113,14 @@ public class SaoPaulo extends javax.swing.JFrame {
         if (escolhido) {
             JOptionPane.showMessageDialog(this, "Luciano já foi escolhido.", "Informação", JOptionPane.INFORMATION_MESSAGE);
         } else if(gameState.getPersonagensEscolhidos().size() >= 1){
-            Personagem personagem9 = new Personagem("Luciano", new ImageIcon("C:\\Users\\bruno\\OneDrive\\Documentos\\NetBeansProjects\\HeadFootball\\src\\main\\java\\res\\luciano.png"));
+            Personagem personagem9 = new Personagem("Luciano", new ImageIcon("C:\\Users\\bruno\\OneDrive\\Documentos\\NetBeansProjects\\HeadFootball\\src\\main\\java\\res\\luciano.png"),
+            new ImageIcon("C:\\Users\\bruno\\OneDrive\\Documentos\\NetBeansProjects\\HeadFootball\\src\\main\\java\\res\\lucianochutando.png"));
             gameState.adicionarPersonagem(personagem9);
             new Jogo().setVisible(true);
             dispose();
         }else{
-            Personagem personagem9 = new Personagem("Luciano", new ImageIcon("C:\\Users\\bruno\\OneDrive\\Documentos\\NetBeansProjects\\HeadFootball\\src\\main\\java\\res\\luciano.png"));
+            Personagem personagem9 = new Personagem("Luciano", new ImageIcon("C:\\Users\\bruno\\OneDrive\\Documentos\\NetBeansProjects\\HeadFootball\\src\\main\\java\\res\\luciano.png"),
+            new ImageIcon("C:\\Users\\bruno\\OneDrive\\Documentos\\NetBeansProjects\\HeadFootball\\src\\main\\java\\res\\lucianochutando.png"));
             gameState.adicionarPersonagem(personagem9);
             new AtleticoMg().setVisible(true);
             dispose();

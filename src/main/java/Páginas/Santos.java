@@ -112,12 +112,14 @@ public class Santos extends javax.swing.JFrame {
         if (escolhido) {
             JOptionPane.showMessageDialog(this, "Soteldo já foi escolhido.", "Informação", JOptionPane.INFORMATION_MESSAGE);
         } else if(gameState.getPersonagensEscolhidos().size() >= 1){
-            Personagem personagem8 = new Personagem("Soteldo", new ImageIcon("C:\\Users\\bruno\\OneDrive\\Documentos\\NetBeansProjects\\HeadFootball\\src\\main\\java\\res\\soteldo.png"));
+            Personagem personagem8 = new Personagem("Soteldo", new ImageIcon("C:\\Users\\bruno\\OneDrive\\Documentos\\NetBeansProjects\\HeadFootball\\src\\main\\java\\res\\soteldo.png"),
+            new ImageIcon("C:\\Users\\bruno\\OneDrive\\Documentos\\NetBeansProjects\\HeadFootball\\src\\main\\java\\res\\soteldochutando.png"));
             gameState.adicionarPersonagem(personagem8);
             new Jogo().setVisible(true);
             dispose();
         }else{
-            Personagem personagem8 = new Personagem("Soteldo", new ImageIcon("C:\\Users\\bruno\\OneDrive\\Documentos\\NetBeansProjects\\HeadFootball\\src\\main\\java\\res\\soteldo.png"));
+            Personagem personagem8 = new Personagem("Soteldo", new ImageIcon("C:\\Users\\bruno\\OneDrive\\Documentos\\NetBeansProjects\\HeadFootball\\src\\main\\java\\res\\soteldo.png"),
+            new ImageIcon("C:\\Users\\bruno\\OneDrive\\Documentos\\NetBeansProjects\\HeadFootball\\src\\main\\java\\res\\soteldochutando.png"));
             gameState.adicionarPersonagem(personagem8);
             new Flamengo().setVisible(true);
             dispose();
