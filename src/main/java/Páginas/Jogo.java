@@ -7,12 +7,15 @@ package Páginas;
 import Utilitários.GameState;
 import Utilitários.Personagem;
 import java.awt.List;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.Timer;
 
 /**
  *
@@ -21,7 +24,6 @@ import javax.swing.JLabel;
 public class Jogo extends javax.swing.JFrame {
     private boolean tabPressed1;
     private boolean tabPressed2;
-    
     /**
      * Creates new form Jogo
      */
@@ -44,15 +46,104 @@ public class Jogo extends javax.swing.JFrame {
         }
     }
             addKeyListener(new KeyAdapter() {
-            @Override
-            public void keyPressed(KeyEvent e) {
-                if (e.getKeyCode() == KeyEvent.VK_Q) {
+                //Coordenadas do jogador1
+                int xInicialp1 = jogador1.getX();
+                int yInicialp1 = jogador1.getY();
+                int xAtualp1 = xInicialp1;
+                int yAtualp1 = yInicialp1;
+                boolean pulando1 = false;
+                int puloY1 = 0;
+                int velocidadeSalto1 = -25; // Velocidade inicial de salto
+                int gravidade1 = 2; 
+                //Coordenadas do jogador2   
+                int xInicialp2 = jogador2.getX();
+                int yInicialp2 = jogador2.getY();
+                int xAtualp2 = xInicialp2;
+                int yAtualp2 = yInicialp2;
+                boolean pulando2 = false;
+                int puloY2 = 0;
+                int velocidadeSalto2 = -25; // Velocidade inicial de salto
+                int gravidade2 = 2; 
+
+                @Override
+                public void keyPressed(KeyEvent e) {
+                 int keyCode = e.getKeyCode();
+                switch (keyCode) {
+                case KeyEvent.VK_W:
+                    if (!pulando1) {
+                    pulando1 = true;
+                    puloY1 = velocidadeSalto1; // Define a velocidade de salto
+                    Timer timer = new Timer(15, new ActionListener() {
+                        @Override
+                        public void actionPerformed(ActionEvent e) {
+                            // Aplica a velocidade de salto
+                            yAtualp1 += puloY1;
+                            puloY1 += gravidade1; // Aplica a força de gravidade
+
+                            // Verifica se o jogador atingiu o solo
+                            if (yAtualp1 >= yInicialp1) {
+                                yAtualp1 = yInicialp1;
+                                pulando1 = false; // O jogador parou de pular
+                                ((Timer) e.getSource()).stop(); // Para o temporizador
+                            }
+
+                            // Atualiza a posição do jogador1
+                            jogador1.setLocation(xAtualp1, yAtualp1);
+                        }
+                    });
+                    timer.start();
+                }
+                    break;
+                case KeyEvent.VK_D:
+                    xAtualp1 +=10;
+                    jogador1.setLocation(xAtualp1, yAtualp1);
+                    break;
+                case KeyEvent.VK_A:
+                    xAtualp1 -=10;
+                    jogador1.setLocation(xAtualp1, yAtualp1);
+                    break;
+                case KeyEvent.VK_Q:
                     tabPressed1 = true;
                     atualizarImagem();
-                }else if(e.getKeyCode() == KeyEvent.VK_P){
+                    break;
+                case KeyEvent.VK_UP:
+                    if (!pulando2) {
+                    pulando2 = true;
+                    puloY2 = velocidadeSalto2; // Define a velocidade de salto
+                    Timer timer = new Timer(15, new ActionListener() {
+                        @Override
+                        public void actionPerformed(ActionEvent e) {
+                            // Aplica a velocidade de salto
+                            yAtualp2 += puloY2;
+                            puloY2 += gravidade2; // Aplica a força de gravidade
+
+                            // Verifica se o jogador atingiu o solo
+                            if (yAtualp2 >= yInicialp2) {
+                                yAtualp2 = yInicialp2;
+                                pulando2 = false; // O jogador parou de pular
+                                ((Timer) e.getSource()).stop(); // Para o temporizador
+                            }
+
+                            // Atualiza a posição do jogador1
+                            jogador2.setLocation(xAtualp2, yAtualp2);
+                        }
+                    });
+                    timer.start();
+                }
+                    break;
+                case KeyEvent.VK_RIGHT:
+                    xAtualp2 +=10;
+                    jogador2.setLocation(xAtualp2, yAtualp2);
+                    break;
+                case KeyEvent.VK_LEFT:
+                    xAtualp2 -=10;
+                    jogador2.setLocation(xAtualp2, yAtualp2);
+                    break;
+                case KeyEvent.VK_P:
                     tabPressed2 = true;
                     atualizarImagem();
-                }
+                    break;
+        }
             }
 
             @Override
@@ -63,12 +154,24 @@ public class Jogo extends javax.swing.JFrame {
                 }else if(e.getKeyCode() == KeyEvent.VK_P){
                     tabPressed2 = false;
                     atualizarImagem();
+                }else if(e.getKeyCode() == KeyEvent.VK_W){
+                if (yAtualp1 >= yInicialp1) {
+                yAtualp1 = yInicialp1; // Define a posição inicial somente se estiver no solo
+                }
+                }else if(e.getKeyCode() == KeyEvent.VK_UP){
+                if (yAtualp2 >= yInicialp2) {
+                yAtualp2 = yInicialp2;
+                }
                 }
             }
-        });
 
+        });
+        
+            
         // Outras inicializações e configurações
     }
+    
+    
 
     private void atualizarImagem() {
         GameState gameState = GameState.getInstance();
