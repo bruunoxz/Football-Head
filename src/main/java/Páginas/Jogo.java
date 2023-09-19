@@ -5,6 +5,7 @@
 package Páginas;
 
 import Utilitários.GameState;
+import Utilitários.KeyManager;
 import Utilitários.Personagem;
 import java.awt.List;
 import java.awt.Rectangle;
@@ -20,6 +21,7 @@ import java.util.Set;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.SwingUtilities;
 import javax.swing.Timer;
 
 /**
@@ -32,10 +34,14 @@ public class Jogo extends javax.swing.JFrame {
     private boolean tabPressed2;
     int velocidadeX = 10;
     int velocidadeY = 5;
-    private int velocidadeJogador1 = 5;
-    private int velocidadeJogador2 = 5;
-    private Set<Integer> teclasPressionadasJogador1 = new HashSet<>();
-    private Set<Integer> teclasPressionadasJogador2 = new HashSet<>();
+    boolean jogdireita1 = false;
+    boolean jogesquerda1 = false;
+    boolean jogdireita2 = false;
+    boolean jogesquerda2 = false;
+    boolean jogchutando1 = false;
+    boolean jogchutando2 = false;
+    private KeyManager km;
+    
     /**
      * Creates new form Jogo
      */
@@ -47,6 +53,7 @@ public class Jogo extends javax.swing.JFrame {
             if (personagem != null && personagem.getImagem() != null) {
                 //Defina a imagem do JLabel com base no primeiro personagem escolhido
                 jogador1.setIcon(personagem.getImagem());
+                time1.setIcon(personagem.getPlacar());
             }
         // Verificar se há pelo menos dois personagens escolhidos
         if (gameState.getPersonagensEscolhidos().size() >= 2) {
@@ -54,9 +61,12 @@ public class Jogo extends javax.swing.JFrame {
             Personagem personagem2 = gameState.getPersonagensEscolhidos().get(1);
             if (personagem2 != null && personagem2.getImagem() != null) {
                     jogador2.setIcon(personagem2.getImagem());
+                    time2.setIcon(personagem2.getPlacar());
             }
         }
     }
+        km = new KeyManager();
+        
             addKeyListener(new KeyAdapter() {
                 //Coordenadas do jogador1
                 int xInicialp1 = jogador1.getX();
@@ -109,14 +119,17 @@ public class Jogo extends javax.swing.JFrame {
                 case KeyEvent.VK_D:
                     xAtualp1 +=10;
                     jogador1.setLocation(xAtualp1, yAtualp1);
+                    jogdireita1 = true;
                     break;
                 case KeyEvent.VK_A:
                     xAtualp1 -=10;
                     jogador1.setLocation(xAtualp1, yAtualp1);
+                    jogesquerda1 = true;
                     break;
                 case KeyEvent.VK_Q:
                     tabPressed1 = true;
                     atualizarImagem();
+                    jogchutando1 = true;
                     break;
                 case KeyEvent.VK_UP:
                     if (!pulando2) {
@@ -146,10 +159,12 @@ public class Jogo extends javax.swing.JFrame {
                 case KeyEvent.VK_RIGHT:
                     xAtualp2 +=10;
                     jogador2.setLocation(xAtualp2, yAtualp2);
+                    jogdireita2 = true;
                     break;
                 case KeyEvent.VK_LEFT:
                     xAtualp2 -=10;
                     jogador2.setLocation(xAtualp2, yAtualp2);
+                    jogesquerda2 = true;
                     break;
                 case KeyEvent.VK_P:
                     tabPressed2 = true;
@@ -178,7 +193,7 @@ public class Jogo extends javax.swing.JFrame {
             }
 
         });
-        
+            
         /*int bolaX = bola.getX();
         int bolaY = bola.getY();
         int larguraDaBola = bola.getWidth();
@@ -196,6 +211,9 @@ public class Jogo extends javax.swing.JFrame {
         jogoThread.start();
     }
     
+    //MÉTODOS
+    
+    
         private void verificarColisoes() {
         Rectangle retanguloJogador1 = jogador1.getBounds();
         Rectangle retanguloJogador2 = jogador2.getBounds();
@@ -207,29 +225,7 @@ public class Jogo extends javax.swing.JFrame {
         }
         }
         
-        private void encerrarJogo() {
-        // Execute qualquer lógica de encerramento necessária, como salvar progresso do jogo, etc.
-        jogoEmExecucao = false;
-        dispose(); // Feche o JFrame
-        }
             
-                private void iniciarLoopDoJogo() {
-        while (jogoEmExecucao) {
-            // Atualize a lógica do jogo
-            verificarColisoes();
-
-            // Renderize a tela
-            // ...
-
-            // Adicione uma pequena pausa para controlar a taxa de atualização do loop
-            try {
-                Thread.sleep(16); // Isso atualiza o jogo aproximadamente a 60 quadros por segundo
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-        }
-    }
-                
                 
         void moverBola() {
             
@@ -247,34 +243,54 @@ public class Jogo extends javax.swing.JFrame {
         // Atualizar a posição da bola com base na velocidade
         bolaX += velocidadeX;
         bolaY += velocidadeY;
-
         // Certifique-se de verificar os limites do campo e reverter a direção se a bola atingir um limite
         if (bolaX < 0 || bolaX + larguraDaBola > larguraDaJanela) {
             // A bola atingiu um dos limites laterais, inverta a velocidade horizontal
             velocidadeX = -velocidadeX;
         }
-
         if (bolaY < 0 || bolaY + alturaDaBola > alturaDaJanela) {
             // A bola atingiu um dos limites superior ou inferior, inverta a velocidade vertical
             velocidadeY = -velocidadeY;
         }
-
         // Atualize a posição da bola na tela
         bola.setLocation(bolaX, bolaY);
-
-        // Verifique a colisão com os jogadores aqui
-        if (colisaoComJogador(jogador1, bola)) {
-            bolaX += 10;
-            bola.setLocation(bolaX, bolaY);
-        }else if(colisaoComJogador(jogador2, bola)){
-            bolaX -= 10;
-            bola.setLocation(bolaX, bolaY);
+        
+        if (colisaoComBola(jogador1, bola)) {
+            if(jogdireita1){
+                jogesquerda1 = false;
+                bolaX += 10;
+                bola.setLocation(bolaX, bolaY); 
+            }else if(jogesquerda1){
+                jogdireita1 = false;
+                bolaX -=10;
+                bola.setLocation(bolaX, bolaY);
+            }else if(jogchutando1){
+                bolaX += 30;
+                bolaY -= 20;
+                bola.setLocation(bolaX, bolaY);
+            }
+        }else if(colisaoComBola(jogador2, bola)){
+            if(jogdireita2){
+                jogesquerda2 = false;
+                bolaX += 10;
+                bola.setLocation(bolaX, bolaY);
+            }else if(jogesquerda2){
+                jogdireita2 = false;
+                bolaX -=10;
+                bola.setLocation(bolaX, bolaY);
+            }
+        }
+        
+        if(colisaoComJogador(jogador1, jogador2)){
+            
         }
     }
 
-    boolean colisaoComJogador(JLabel jogador, JLabel bola) {
-        // Verifique se houve colisão entre o jogador e a bola
+    boolean colisaoComBola(JLabel jogador, JLabel bola) {
         return jogador.getBounds().intersects(bola.getBounds());
+    }
+    boolean colisaoComJogador(JLabel jogador1, JLabel jogador2){
+        return jogador1.getBounds().intersects(jogador2.getBounds());
     }
     
 
@@ -301,6 +317,28 @@ public class Jogo extends javax.swing.JFrame {
         }
     }
     
+        private void iniciarLoopDoJogo() {
+        while (jogoEmExecucao) {
+            // Atualize a lógica do jogo
+            verificarColisoes();
+
+            // Renderize a tela
+            // ...
+
+            // Adicione uma pequena pausa para controlar a taxa de atualização do loop
+            try {
+                Thread.sleep(16); // Isso atualiza o jogo aproximadamente a 60 quadros por segundo
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+       private void encerrarJogo() {
+        // Execute qualquer lógica de encerramento necessária, como salvar progresso do jogo, etc.
+        jogoEmExecucao = false;
+        dispose(); // Feche o JFrame
+        }
+    
 
 
 
@@ -317,6 +355,9 @@ public class Jogo extends javax.swing.JFrame {
         bola = new javax.swing.JLabel();
         jogador1 = new javax.swing.JLabel();
         jogador2 = new javax.swing.JLabel();
+        time1 = new javax.swing.JLabel();
+        time2 = new javax.swing.JLabel();
+        placar = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -325,11 +366,19 @@ public class Jogo extends javax.swing.JFrame {
 
         bola.setIcon(new javax.swing.ImageIcon("C:\\Users\\bruno\\OneDrive\\Documentos\\NetBeansProjects\\HeadFootball\\src\\main\\java\\res\\bola.png")); // NOI18N
         getContentPane().add(bola);
-        bola.setBounds(660, 650, 75, 75);
+        bola.setBounds(660, 680, 75, 75);
         getContentPane().add(jogador1);
-        jogador1.setBounds(120, 599, 210, 170);
+        jogador1.setBounds(120, 620, 134, 134);
         getContentPane().add(jogador2);
-        jogador2.setBounds(1020, 590, 210, 170);
+        jogador2.setBounds(1060, 620, 134, 134);
+        getContentPane().add(time1);
+        time1.setBounds(10, 10, 170, 60);
+        getContentPane().add(time2);
+        time2.setBounds(10, 90, 170, 60);
+
+        placar.setIcon(new javax.swing.ImageIcon("C:\\Users\\bruno\\OneDrive\\Documentos\\NetBeansProjects\\HeadFootball\\src\\main\\java\\res\\placar.PNG")); // NOI18N
+        getContentPane().add(placar);
+        placar.setBounds(0, -10, 276, 250);
 
         jLabel2.setIcon(new javax.swing.ImageIcon("C:\\Users\\bruno\\OneDrive\\Documentos\\NetBeansProjects\\HeadFootball\\src\\main\\java\\res\\fundojogo.jpg")); // NOI18N
         getContentPane().add(jLabel2);
@@ -378,5 +427,8 @@ public class Jogo extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jogador1;
     private javax.swing.JLabel jogador2;
+    private javax.swing.JLabel placar;
+    private javax.swing.JLabel time1;
+    private javax.swing.JLabel time2;
     // End of variables declaration//GEN-END:variables
 }

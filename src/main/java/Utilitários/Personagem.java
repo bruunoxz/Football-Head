@@ -8,10 +8,12 @@ public class Personagem {
     private boolean escolhido;
     private ImageIcon imagem;
     private ImageIcon imagem2;
+    private ImageIcon placar;
 
-    public Personagem(String nome, ImageIcon imagem, ImageIcon imagem2) {
+    public Personagem(String nome, ImageIcon imagem, ImageIcon imagem2, ImageIcon placar) {
         this.nome = nome;
         this.escolhido = false;
+        this.placar = placar;
         GameState gameState = GameState.getInstance();
         if(gameState.getPersonagensEscolhidos().size() >= 1){
             this.imagem = imagem;
@@ -20,6 +22,14 @@ public class Personagem {
             this.imagem = espelharHorizontalmente(imagem);
             this.imagem2 = espelharHorizontalmente(imagem2);
     }
+    }
+
+    public ImageIcon getPlacar() {
+        return placar;
+    }
+
+    public void setPlacar(ImageIcon placar) {
+        this.placar = placar;
     }
     public String getNome() {
         return nome;
