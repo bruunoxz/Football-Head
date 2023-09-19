@@ -7,11 +7,16 @@ package Páginas;
 import Utilitários.GameState;
 import Utilitários.Personagem;
 import java.awt.List;
+import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Set;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -22,8 +27,15 @@ import javax.swing.Timer;
  * @author bruno
  */
 public class Jogo extends javax.swing.JFrame {
+    boolean jogoEmExecucao = true;
     private boolean tabPressed1;
     private boolean tabPressed2;
+    int velocidadeX = 10;
+    int velocidadeY = 5;
+    private int velocidadeJogador1 = 5;
+    private int velocidadeJogador2 = 5;
+    private Set<Integer> teclasPressionadasJogador1 = new HashSet<>();
+    private Set<Integer> teclasPressionadasJogador2 = new HashSet<>();
     /**
      * Creates new form Jogo
      */
@@ -167,10 +179,103 @@ public class Jogo extends javax.swing.JFrame {
 
         });
         
-            
-        // Outras inicializações e configurações
+        /*int bolaX = bola.getX();
+        int bolaY = bola.getY();
+        int larguraDaBola = bola.getWidth();
+        int alturaDaBola = bola.getHeight();
+        int jogador1X = jogador1.getX();
+        int jogador1Y = jogador1.getY();
+        int larguraJogador1 = jogador1.getWidth();
+        int alturaJogador1 = jogador1.getHeight();
+        int jogador2X = jogador2.getX();
+        int jogador2Y = jogador2.getY();
+        int larguraJogador2 = jogador2.getWidth();
+        int alturaJogador2 = jogador2.getHeight();*/
+       
+        Thread jogoThread = new Thread(this::iniciarLoopDoJogo);
+        jogoThread.start();
     }
     
+        private void verificarColisoes() {
+        Rectangle retanguloJogador1 = jogador1.getBounds();
+        Rectangle retanguloJogador2 = jogador2.getBounds();
+        Rectangle retanguloBola = bola.getBounds();
+
+        if (retanguloJogador1.intersects(retanguloBola) || retanguloJogador2.intersects(retanguloBola)) {
+            // Houve uma colisão entre um dos jogadores e a bola
+            moverBola(); // Chame o método para mover a bola ou realizar ações relacionadas à colisão
+        }
+        }
+        
+        private void encerrarJogo() {
+        // Execute qualquer lógica de encerramento necessária, como salvar progresso do jogo, etc.
+        jogoEmExecucao = false;
+        dispose(); // Feche o JFrame
+        }
+            
+                private void iniciarLoopDoJogo() {
+        while (jogoEmExecucao) {
+            // Atualize a lógica do jogo
+            verificarColisoes();
+
+            // Renderize a tela
+            // ...
+
+            // Adicione uma pequena pausa para controlar a taxa de atualização do loop
+            try {
+                Thread.sleep(16); // Isso atualiza o jogo aproximadamente a 60 quadros por segundo
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+                
+                
+        void moverBola() {
+            
+        int larguraDaJanela = getWidth();
+        int alturaDaJanela = getHeight();
+
+        int bolaX = bola.getX();
+        int bolaY = bola.getY();
+        int larguraDaBola = bola.getWidth();
+        int alturaDaBola = bola.getHeight();
+
+        int velocidadeX = 5;
+        int velocidadeY = 0;
+
+        // Atualizar a posição da bola com base na velocidade
+        bolaX += velocidadeX;
+        bolaY += velocidadeY;
+
+        // Certifique-se de verificar os limites do campo e reverter a direção se a bola atingir um limite
+        if (bolaX < 0 || bolaX + larguraDaBola > larguraDaJanela) {
+            // A bola atingiu um dos limites laterais, inverta a velocidade horizontal
+            velocidadeX = -velocidadeX;
+        }
+
+        if (bolaY < 0 || bolaY + alturaDaBola > alturaDaJanela) {
+            // A bola atingiu um dos limites superior ou inferior, inverta a velocidade vertical
+            velocidadeY = -velocidadeY;
+        }
+
+        // Atualize a posição da bola na tela
+        bola.setLocation(bolaX, bolaY);
+
+        // Verifique a colisão com os jogadores aqui
+        if (colisaoComJogador(jogador1, bola)) {
+            bolaX += 10;
+            bola.setLocation(bolaX, bolaY);
+        }else if(colisaoComJogador(jogador2, bola)){
+            bolaX -= 10;
+            bola.setLocation(bolaX, bolaY);
+        }
+    }
+
+    boolean colisaoComJogador(JLabel jogador, JLabel bola) {
+        // Verifique se houve colisão entre o jogador e a bola
+        return jogador.getBounds().intersects(bola.getBounds());
+    }
     
 
     private void atualizarImagem() {
@@ -209,22 +314,22 @@ public class Jogo extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        bola = new javax.swing.JLabel();
         jogador1 = new javax.swing.JLabel();
         jogador2 = new javax.swing.JLabel();
-        bola = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setMinimumSize(new java.awt.Dimension(1400, 788));
         getContentPane().setLayout(null);
-        getContentPane().add(jogador1);
-        jogador1.setBounds(120, 590, 250, 179);
-        getContentPane().add(jogador2);
-        jogador2.setBounds(1020, 590, 250, 179);
 
         bola.setIcon(new javax.swing.ImageIcon("C:\\Users\\bruno\\OneDrive\\Documentos\\NetBeansProjects\\HeadFootball\\src\\main\\java\\res\\bola.png")); // NOI18N
         getContentPane().add(bola);
         bola.setBounds(660, 650, 75, 75);
+        getContentPane().add(jogador1);
+        jogador1.setBounds(120, 599, 210, 170);
+        getContentPane().add(jogador2);
+        jogador2.setBounds(1020, 590, 210, 170);
 
         jLabel2.setIcon(new javax.swing.ImageIcon("C:\\Users\\bruno\\OneDrive\\Documentos\\NetBeansProjects\\HeadFootball\\src\\main\\java\\res\\fundojogo.jpg")); // NOI18N
         getContentPane().add(jLabel2);
