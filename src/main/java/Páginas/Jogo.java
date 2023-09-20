@@ -29,8 +29,6 @@ import javax.swing.Timer;
  */
 public class Jogo extends javax.swing.JFrame {
     boolean jogoEmExecucao = true;
-    private boolean tabPressed1;
-    private boolean tabPressed2;
     int velocidadeX = 10;
     int velocidadeY = 5;
     private Set<Integer> teclasPressionadasJogador1 = new HashSet<>();
@@ -150,6 +148,9 @@ public class Jogo extends javax.swing.JFrame {
                     });
                     timer.start();
                 }
+                }else if(teclasPressionadasJogador1.contains(KeyEvent.VK_Q)){
+                    atualizarImagem();
+                    jogchutando1 = true;
                 }
             }else if(teclasPressionadasJogador1.contains(KeyEvent.VK_A)){
                 xAtualp1 -=7;
@@ -205,13 +206,11 @@ public class Jogo extends javax.swing.JFrame {
                     timer.start();
                 }
             }else if(teclasPressionadasJogador1.contains(KeyEvent.VK_Q)){
-                    tabPressed1 = true;
-                    atualizarImagem();
                     jogchutando1 = true;
+                    atualizarImagem();
             }else if(!(teclasPressionadasJogador1.contains(KeyEvent.VK_Q))){
-                tabPressed1 = false;
-                atualizarImagem();
                 jogchutando1 = false;
+                atualizarImagem();
             }
         }
 
@@ -255,7 +254,7 @@ public class Jogo extends javax.swing.JFrame {
                 xAtualp2 -=7;
                 jogador2.setLocation(xAtualp2, yAtualp2);
                 jogesquerda2 = true;
-                                if(teclasPressionadasJogador2.contains(KeyEvent.VK_UP)){
+                    if(teclasPressionadasJogador2.contains(KeyEvent.VK_UP)){
                     if (!pulando2) {
                        pulando2 = true;
                        puloY2 = velocidadeSalto2; // Define a velocidade de salto
@@ -279,6 +278,9 @@ public class Jogo extends javax.swing.JFrame {
                        });
                        timer.start();
                    }
+                }else if(teclasPressionadasJogador2.contains(KeyEvent.VK_P)){
+                    jogchutando2 = true;
+                    atualizarImagem();
                 }
             }else if(teclasPressionadasJogador2.contains(KeyEvent.VK_UP)){
                 if (!pulando2) {
@@ -305,13 +307,11 @@ public class Jogo extends javax.swing.JFrame {
                     timer.start();
                 }
             }else if(teclasPressionadasJogador2.contains(KeyEvent.VK_P)){
-                    tabPressed2 = true;
-                    atualizarImagem();
                     jogchutando2 = true;
+                    atualizarImagem();
             }else if(!(teclasPressionadasJogador2.contains(KeyEvent.VK_P))){
-                tabPressed2 = false;
-                atualizarImagem();
                 jogchutando2 = false;
+                atualizarImagem();
             }
         }
     
@@ -343,33 +343,42 @@ public class Jogo extends javax.swing.JFrame {
         int velocidadeX = 5;
         int velocidadeY = 0;
 
-        // Atualizar a posição da bola com base na velocidade
-        bolaX += velocidadeX;
-        bolaY += velocidadeY;
-        // Certifique-se de verificar os limites do campo e reverter a direção se a bola atingir um limite
-        if (bolaX < 0 || bolaX + larguraDaBola > larguraDaJanela) {
-            // A bola atingiu um dos limites laterais, inverta a velocidade horizontal
-            velocidadeX = -velocidadeX;
+           // Verifique se a bola atingiu o limite esquerdo ou direito da tela
+    if (bolaX < 0 || bolaX + larguraDaBola > larguraDaJanela) {
+        // A bola atingiu um dos limites laterais, inverta a velocidade horizontal
+        velocidadeX = -velocidadeX;
+
+        // Verifique se a bola está no lado esquerdo ou direito da tela
+        if (bolaX < 0) {
+            // A bola atingiu o limite esquerdo da tela, mova-a para o centro
+            bolaX = larguraDaJanela / 4; // Defina a nova posição X
+        } else {
+            // A bola atingiu o limite direito da tela, mova-a para o centro
+            bolaX = 3 * larguraDaJanela / 4; // Defina a nova posição X
         }
-        if (bolaY < 0 || bolaY + alturaDaBola > alturaDaJanela) {
-            // A bola atingiu um dos limites superior ou inferior, inverta a velocidade vertical
-            velocidadeY = -velocidadeY;
-        }
-        // Atualize a posição da bola na tela
-        bola.setLocation(bolaX, bolaY);
-        
+    }
+
+    if (bolaY < 0 || bolaY + alturaDaBola > alturaDaJanela) {
+        // A bola atingiu um dos limites superior ou inferior, inverta a velocidade vertical
+        velocidadeY = -velocidadeY;
+    }
+
+    // Atualize a posição da bola na tela
+    bola.setLocation(bolaX, bolaY);
+
         if (colisaoComBola(jogador1, bola)) {
             if(jogdireita1){
                 jogesquerda1 = false;
                 bolaX += 10;
                 bola.setLocation(bolaX, bolaY); 
+                if(jogchutando1){
+                /*AnimacaoChute animacaoChute = new AnimacaoChute(bolaX, bolaY);
+                Timer subidaTimer = new Timer(50, animacaoChute.getActionListener());
+                subidaTimer.start();*/
+                }
             }else if(jogesquerda1){
                 jogdireita1 = false;
                 bolaX -=10;
-                bola.setLocation(bolaX, bolaY);
-            }else if(jogchutando1){
-                bolaX += 30;
-                bolaY -= 20;
                 bola.setLocation(bolaX, bolaY);
             }
         }else if(colisaoComBola(jogador2, bola)){
@@ -377,10 +386,20 @@ public class Jogo extends javax.swing.JFrame {
                 jogesquerda2 = false;
                 bolaX += 10;
                 bola.setLocation(bolaX, bolaY);
+                if(jogchutando2){
+                 bolaX += 30;
+                bolaY -= 20;
+                bola.setLocation(bolaX, bolaY);
+                }
             }else if(jogesquerda2){
                 jogdireita2 = false;
                 bolaX -=10;
                 bola.setLocation(bolaX, bolaY);
+                if(jogchutando2){
+                    bolaX -= 30;
+                    bolaY -= 20;
+                    bola.setLocation(bolaX, bolaY);
+                }
             }
         }
         
@@ -406,12 +425,12 @@ public class Jogo extends javax.swing.JFrame {
                 // Obter a imagem2 do personagem
                 ImageIcon chutep1 = personagem.getImagem2();
                 ImageIcon chutep2 = personagem2.getImagem2();
-                if (tabPressed1 && chutep1 != null) {
+                if (jogchutando1 && chutep1 != null) {
                     jogador1.setIcon(chutep1);
                 } else {
                     jogador1.setIcon(personagem.getImagem());
                 }
-                if(tabPressed2 && chutep2 !=null){
+                if(jogchutando2 && chutep2 !=null){
                     jogador2.setIcon(chutep2);
                 }else{
                     jogador2.setIcon(personagem2.getImagem());
