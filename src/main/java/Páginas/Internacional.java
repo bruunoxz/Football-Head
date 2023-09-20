@@ -20,6 +20,8 @@ public class Internacional extends javax.swing.JFrame {
      */
     public Internacional() {
         initComponents();
+        setLocationRelativeTo(null); 
+        setResizable(false);
     }
 
     /**

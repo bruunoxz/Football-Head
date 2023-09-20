@@ -22,6 +22,8 @@ public class Botafogo extends javax.swing.JFrame {
      */
     public Botafogo() {
         initComponents();
+        setLocationRelativeTo(null); 
+        setResizable(false);
     }
 
     /**

@@ -21,6 +21,8 @@ public class TelaInicial extends javax.swing.JFrame {
      //FundoTela tela;
     public TelaInicial() {
         initComponents();
+        setLocationRelativeTo(null); 
+        setResizable(false);
        /* setExtendedState(JFrame.MAXIMIZED_BOTH);
         setLayout(new GridLayout());
         tela = new FundoTela("C:\\\\Users\\\\bruno\\\\OneDrive\\\\Documentos\\\\NetBeansProjects\\\\HeadFootball\\\\src\\\\main\\\\java\\\\res\\\\menu (2).png");

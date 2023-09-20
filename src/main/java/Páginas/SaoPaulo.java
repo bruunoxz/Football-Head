@@ -20,6 +20,8 @@ public class SaoPaulo extends javax.swing.JFrame {
      */
     public SaoPaulo() {
         initComponents();
+        setLocationRelativeTo(null); 
+        setResizable(false);
     }
 
     /**

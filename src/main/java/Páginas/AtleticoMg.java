@@ -21,6 +21,8 @@ public class AtleticoMg extends javax.swing.JFrame {
      */
     public AtleticoMg() {
         initComponents();
+        setLocationRelativeTo(null); 
+        setResizable(false);
     }
     /**
      * This method is called from within the constructor to initialize the form.

@@ -5,7 +5,6 @@
 package Páginas;
 
 import Utilitários.GameState;
-import Utilitários.KeyManager;
 import Utilitários.Personagem;
 import java.awt.List;
 import java.awt.Rectangle;
@@ -34,19 +33,35 @@ public class Jogo extends javax.swing.JFrame {
     private boolean tabPressed2;
     int velocidadeX = 10;
     int velocidadeY = 5;
-    boolean jogdireita1 = false;
-    boolean jogesquerda1 = false;
-    boolean jogdireita2 = false;
-    boolean jogesquerda2 = false;
-    boolean jogchutando1 = false;
-    boolean jogchutando2 = false;
-    private KeyManager km;
+    private Set<Integer> teclasPressionadasJogador1 = new HashSet<>();
+    private Set<Integer> teclasPressionadasJogador2 = new HashSet<>();
+    boolean pulando1 = false;
+    int puloY1 = 0;
+    int velocidadeSalto1 = -30; // Velocidade inicial de salto
+    int gravidade1 = 2; 
+    //Coordenadas do jogador2   
+    boolean pulando2 = false;
+    int puloY2 = 0;
+    int velocidadeSalto2 = -30; // Velocidade inicial de salto
+    int gravidade2 = 2; 
+    int xAtualp1;
+    int yAtualp1;
+    int xAtualp2;
+    int yAtualp2;     
+    boolean jogdireita1;
+    boolean jogesquerda1;
+    boolean jogdireita2;
+    boolean jogesquerda2;
+    boolean jogchutando1;
+    boolean jogchutando2;
     
     /**
      * Creates new form Jogo
      */
     public Jogo() {
         initComponents();
+        setLocationRelativeTo(null); 
+        setResizable(false);
         GameState gameState = GameState.getInstance();
         if (!gameState.getPersonagensEscolhidos().isEmpty()) {
             Personagem personagem = gameState.getPersonagensEscolhidos().get(0);
@@ -65,34 +80,54 @@ public class Jogo extends javax.swing.JFrame {
             }
         }
     }
-        km = new KeyManager();
         
-            addKeyListener(new KeyAdapter() {
-                //Coordenadas do jogador1
-                int xInicialp1 = jogador1.getX();
-                int yInicialp1 = jogador1.getY();
-                int xAtualp1 = xInicialp1;
-                int yAtualp1 = yInicialp1;
-                boolean pulando1 = false;
-                int puloY1 = 0;
-                int velocidadeSalto1 = -25; // Velocidade inicial de salto
-                int gravidade1 = 2; 
-                //Coordenadas do jogador2   
-                int xInicialp2 = jogador2.getX();
-                int yInicialp2 = jogador2.getY();
-                int xAtualp2 = xInicialp2;
-                int yAtualp2 = yInicialp2;
-                boolean pulando2 = false;
-                int puloY2 = 0;
-                int velocidadeSalto2 = -25; // Velocidade inicial de salto
-                int gravidade2 = 2; 
+        addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyPressed(KeyEvent e) {
+                int keyCode = e.getKeyCode();
+                // Verifique qual jogador pressionou a tecla
+                if (keyCode == KeyEvent.VK_W || keyCode == KeyEvent.VK_A || keyCode == KeyEvent.VK_D || keyCode == KeyEvent.VK_Q) {
+                    // Tecla pressionada pelo jogador 1
+                    teclasPressionadasJogador1.add(keyCode);
+                } else if (keyCode == KeyEvent.VK_UP || keyCode == KeyEvent.VK_LEFT || keyCode == KeyEvent.VK_RIGHT || keyCode == KeyEvent.VK_P) {
+                    // Tecla pressionada pelo jogador 2
+                    teclasPressionadasJogador2.add(keyCode);
+                }
+            }
 
-                @Override
-                public void keyPressed(KeyEvent e) {
-                 int keyCode = e.getKeyCode();
-                switch (keyCode) {
-                case KeyEvent.VK_W:
-                    if (!pulando1) {
+            @Override
+            public void keyReleased(KeyEvent e) {
+                int keyCode = e.getKeyCode();
+                // Verifique qual jogador liberou a tecla
+                if (keyCode == KeyEvent.VK_W || keyCode == KeyEvent.VK_A || keyCode == KeyEvent.VK_D || keyCode == KeyEvent.VK_Q) {
+                    // Tecla liberada pelo jogador 1
+                    teclasPressionadasJogador1.remove(keyCode);
+                } else if (keyCode == KeyEvent.VK_UP || keyCode == KeyEvent.VK_LEFT || keyCode == KeyEvent.VK_RIGHT || keyCode == KeyEvent.VK_P) {
+                    // Tecla liberada pelo jogador 2
+                    teclasPressionadasJogador2.remove(keyCode);
+                }
+            }
+        });
+        Thread jogoThread = new Thread(this::iniciarLoopDoJogo);
+        jogoThread.start();
+        
+    }
+    
+    //MÉTODOS
+        
+        private void processarTeclasJogador1() {
+            int xInicialp1 = jogador1.getX();
+            int yInicialp1 = jogador1.getY();
+            xAtualp1 = xInicialp1;
+            yAtualp1 = yInicialp1;
+
+            // Lógica para o jogador 1 com base nas teclas pressionadas
+            if (teclasPressionadasJogador1.contains(KeyEvent.VK_D)) {
+                xAtualp1 +=7;
+                jogador1.setLocation(xAtualp1, yAtualp1);
+                jogdireita1 = true;
+                if(teclasPressionadasJogador1.contains(KeyEvent.VK_W)){
+                 if (!pulando1) {
                     pulando1 = true;
                     puloY1 = velocidadeSalto1; // Define a velocidade de salto
                     Timer timer = new Timer(15, new ActionListener() {
@@ -115,24 +150,138 @@ public class Jogo extends javax.swing.JFrame {
                     });
                     timer.start();
                 }
-                    break;
-                case KeyEvent.VK_D:
-                    xAtualp1 +=10;
-                    jogador1.setLocation(xAtualp1, yAtualp1);
-                    jogdireita1 = true;
-                    break;
-                case KeyEvent.VK_A:
-                    xAtualp1 -=10;
-                    jogador1.setLocation(xAtualp1, yAtualp1);
-                    jogesquerda1 = true;
-                    break;
-                case KeyEvent.VK_Q:
+                }
+            }else if(teclasPressionadasJogador1.contains(KeyEvent.VK_A)){
+                xAtualp1 -=7;
+                jogador1.setLocation(xAtualp1, yAtualp1);
+                jogesquerda1 = true;
+                if(teclasPressionadasJogador1.contains(KeyEvent.VK_W)){
+                 if (!pulando1) {
+                    pulando1 = true;
+                    puloY1 = velocidadeSalto1; // Define a velocidade de salto
+                    Timer timer = new Timer(15, new ActionListener() {
+                        @Override
+                        public void actionPerformed(ActionEvent e) {
+                            // Aplica a velocidade de salto
+                            yAtualp1 += puloY1;
+                            puloY1 += gravidade1; // Aplica a força de gravidade
+
+                            // Verifica se o jogador atingiu o solo
+                            if (yAtualp1 >= yInicialp1) {
+                                yAtualp1 = yInicialp1;
+                                pulando1 = false; // O jogador parou de pular
+                                ((Timer) e.getSource()).stop(); // Para o temporizador
+                            }
+
+                            // Atualiza a posição do jogador1
+                            jogador1.setLocation(xAtualp1, yAtualp1);
+                        }
+                    });
+                    timer.start();
+                }
+                }
+            }else if(teclasPressionadasJogador1.contains(KeyEvent.VK_W)){
+                if (!pulando1) {
+                    pulando1 = true;
+                    puloY1 = velocidadeSalto1; // Define a velocidade de salto
+                    Timer timer = new Timer(15, new ActionListener() {
+                        @Override
+                        public void actionPerformed(ActionEvent e) {
+                            // Aplica a velocidade de salto
+                            yAtualp1 += puloY1;
+                            puloY1 += gravidade1; // Aplica a força de gravidade
+
+                            // Verifica se o jogador atingiu o solo
+                            if (yAtualp1 >= yInicialp1) {
+                                yAtualp1 = yInicialp1;
+                                pulando1 = false; // O jogador parou de pular
+                                ((Timer) e.getSource()).stop(); // Para o temporizador
+                            }
+
+                            // Atualiza a posição do jogador1
+                            jogador1.setLocation(xAtualp1, yAtualp1);
+                        }
+                    });
+                    timer.start();
+                }
+            }else if(teclasPressionadasJogador1.contains(KeyEvent.VK_Q)){
                     tabPressed1 = true;
                     atualizarImagem();
                     jogchutando1 = true;
-                    break;
-                case KeyEvent.VK_UP:
+            }else if(!(teclasPressionadasJogador1.contains(KeyEvent.VK_Q))){
+                tabPressed1 = false;
+                atualizarImagem();
+                jogchutando1 = false;
+            }
+        }
+
+        private void processarTeclasJogador2() {
+            // Lógica para o jogador 2 com base nas teclas pressionadas
+            int xInicialp2 = jogador2.getX();
+            int yInicialp2 = jogador2.getY();
+            xAtualp2 = xInicialp2;
+            yAtualp2 = yInicialp2;
+            
+                if (teclasPressionadasJogador2.contains(KeyEvent.VK_RIGHT)) {
+                xAtualp2 +=7;
+                jogador2.setLocation(xAtualp2, yAtualp2);
+                jogdireita2 = true;
+                if(teclasPressionadasJogador2.contains(KeyEvent.VK_UP)){
                     if (!pulando2) {
+                       pulando2 = true;
+                       puloY2 = velocidadeSalto2; // Define a velocidade de salto
+                       Timer timer = new Timer(15, new ActionListener() {
+                           @Override
+                           public void actionPerformed(ActionEvent e) {
+                               // Aplica a velocidade de salto
+                               yAtualp2 += puloY2;
+                               puloY2 += gravidade2; // Aplica a força de gravidade
+
+                               // Verifica se o jogador atingiu o solo
+                               if (yAtualp2 >= yInicialp2) {
+                                   yAtualp2 = yInicialp2;
+                                   pulando2 = false; // O jogador parou de pular
+                                   ((Timer) e.getSource()).stop(); // Para o temporizador
+                               }
+
+                               // Atualiza a posição do jogador1
+                               jogador2.setLocation(xAtualp2, yAtualp2);
+                           }
+                       });
+                       timer.start();
+                   }
+                }
+            }else if(teclasPressionadasJogador2.contains(KeyEvent.VK_LEFT)){
+                xAtualp2 -=7;
+                jogador2.setLocation(xAtualp2, yAtualp2);
+                jogesquerda2 = true;
+                                if(teclasPressionadasJogador2.contains(KeyEvent.VK_UP)){
+                    if (!pulando2) {
+                       pulando2 = true;
+                       puloY2 = velocidadeSalto2; // Define a velocidade de salto
+                       Timer timer = new Timer(15, new ActionListener() {
+                           @Override
+                           public void actionPerformed(ActionEvent e) {
+                               // Aplica a velocidade de salto
+                               yAtualp2 += puloY2;
+                               puloY2 += gravidade2; // Aplica a força de gravidade
+
+                               // Verifica se o jogador atingiu o solo
+                               if (yAtualp2 >= yInicialp2) {
+                                   yAtualp2 = yInicialp2;
+                                   pulando2 = false; // O jogador parou de pular
+                                   ((Timer) e.getSource()).stop(); // Para o temporizador
+                               }
+
+                               // Atualiza a posição do jogador1
+                               jogador2.setLocation(xAtualp2, yAtualp2);
+                           }
+                       });
+                       timer.start();
+                   }
+                }
+            }else if(teclasPressionadasJogador2.contains(KeyEvent.VK_UP)){
+                if (!pulando2) {
                     pulando2 = true;
                     puloY2 = velocidadeSalto2; // Define a velocidade de salto
                     Timer timer = new Timer(15, new ActionListener() {
@@ -155,63 +304,17 @@ public class Jogo extends javax.swing.JFrame {
                     });
                     timer.start();
                 }
-                    break;
-                case KeyEvent.VK_RIGHT:
-                    xAtualp2 +=10;
-                    jogador2.setLocation(xAtualp2, yAtualp2);
-                    jogdireita2 = true;
-                    break;
-                case KeyEvent.VK_LEFT:
-                    xAtualp2 -=10;
-                    jogador2.setLocation(xAtualp2, yAtualp2);
-                    jogesquerda2 = true;
-                    break;
-                case KeyEvent.VK_P:
+            }else if(teclasPressionadasJogador2.contains(KeyEvent.VK_P)){
                     tabPressed2 = true;
                     atualizarImagem();
-                    break;
+                    jogchutando2 = true;
+            }else if(!(teclasPressionadasJogador2.contains(KeyEvent.VK_P))){
+                tabPressed2 = false;
+                atualizarImagem();
+                jogchutando2 = false;
+            }
         }
-            }
-
-            @Override
-            public void keyReleased(KeyEvent e) {
-                if (e.getKeyCode() == KeyEvent.VK_Q) {
-                    tabPressed1 = false;
-                    atualizarImagem();
-                }else if(e.getKeyCode() == KeyEvent.VK_P){
-                    tabPressed2 = false;
-                    atualizarImagem();
-                }else if(e.getKeyCode() == KeyEvent.VK_W){
-                if (yAtualp1 >= yInicialp1) {
-                yAtualp1 = yInicialp1; // Define a posição inicial somente se estiver no solo
-                }
-                }else if(e.getKeyCode() == KeyEvent.VK_UP){
-                if (yAtualp2 >= yInicialp2) {
-                yAtualp2 = yInicialp2;
-                }
-                }
-            }
-
-        });
-            
-        /*int bolaX = bola.getX();
-        int bolaY = bola.getY();
-        int larguraDaBola = bola.getWidth();
-        int alturaDaBola = bola.getHeight();
-        int jogador1X = jogador1.getX();
-        int jogador1Y = jogador1.getY();
-        int larguraJogador1 = jogador1.getWidth();
-        int alturaJogador1 = jogador1.getHeight();
-        int jogador2X = jogador2.getX();
-        int jogador2Y = jogador2.getY();
-        int larguraJogador2 = jogador2.getWidth();
-        int alturaJogador2 = jogador2.getHeight();*/
-       
-        Thread jogoThread = new Thread(this::iniciarLoopDoJogo);
-        jogoThread.start();
-    }
     
-    //MÉTODOS
     
     
         private void verificarColisoes() {
@@ -320,6 +423,16 @@ public class Jogo extends javax.swing.JFrame {
         private void iniciarLoopDoJogo() {
         while (jogoEmExecucao) {
             // Atualize a lógica do jogo
+            jogdireita1 = false;
+            jogesquerda1 = false;
+            jogdireita2 = false;
+            jogesquerda2 = false;
+            jogchutando1 = false;
+            jogchutando2 = false;
+            
+             processarTeclasJogador1();
+             processarTeclasJogador2();
+            
             verificarColisoes();
 
             // Renderize a tela

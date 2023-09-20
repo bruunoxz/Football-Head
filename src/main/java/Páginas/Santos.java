@@ -20,6 +20,8 @@ public class Santos extends javax.swing.JFrame {
      */
     public Santos() {
         initComponents();
+        setLocationRelativeTo(null); 
+        setResizable(false);
     }
 
     /**

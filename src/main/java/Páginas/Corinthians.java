@@ -20,6 +20,8 @@ public class Corinthians extends javax.swing.JFrame {
      */
     public Corinthians() {
         initComponents();
+        setLocationRelativeTo(null); 
+        setResizable(false);
     }
 
     /**

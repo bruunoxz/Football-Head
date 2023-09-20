@@ -20,6 +20,8 @@ public class Palmeiras extends javax.swing.JFrame {
      */
     public Palmeiras() {
         initComponents();
+        setLocationRelativeTo(null); 
+        setResizable(false);
     }
 
     /**

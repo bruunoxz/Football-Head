@@ -20,6 +20,8 @@ public class Flamengo extends javax.swing.JFrame {
      */
     public Flamengo() {
         initComponents();
+        setLocationRelativeTo(null); 
+        setResizable(false);
     }
 
     /**

@@ -20,6 +20,8 @@ public class Gremio extends javax.swing.JFrame {
      */
     public Gremio() {
         initComponents();
+        setLocationRelativeTo(null); 
+        setResizable(false);
     }
 
     /**
