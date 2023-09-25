@@ -14,9 +14,13 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.io.File;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -35,12 +39,11 @@ public class Jogo extends javax.swing.JFrame {
     private Set<Integer> teclasPressionadasJogador2 = new HashSet<>();
     boolean pulando1 = false;
     int puloY1 = 0;
-    int velocidadeSalto1 = -30; // Velocidade inicial de salto
+    int velocidadeSalto1 = -30;
     int gravidade1 = 2; 
-    //Coordenadas do jogador2   
     boolean pulando2 = false;
     int puloY2 = 0;
-    int velocidadeSalto2 = -30; // Velocidade inicial de salto
+    int velocidadeSalto2 = -30;
     int gravidade2 = 2; 
     int xAtualp1;
     int yAtualp1;
@@ -52,6 +55,9 @@ public class Jogo extends javax.swing.JFrame {
     boolean jogesquerda2;
     boolean jogchutando1;
     boolean jogchutando2;
+    int bolaYat;
+    int bolaXat;
+    boolean flagJog = true;
     
     /**
      * Creates new form Jogo
@@ -118,7 +124,8 @@ public class Jogo extends javax.swing.JFrame {
             int yInicialp1 = jogador1.getY();
             xAtualp1 = xInicialp1;
             yAtualp1 = yInicialp1;
-
+            
+            if(flagJog){
             // Lógica para o jogador 1 com base nas teclas pressionadas
             if (teclasPressionadasJogador1.contains(KeyEvent.VK_D)) {
                 xAtualp1 +=7;
@@ -212,6 +219,7 @@ public class Jogo extends javax.swing.JFrame {
                 jogchutando1 = false;
                 atualizarImagem();
             }
+            }
         }
 
         private void processarTeclasJogador2() {
@@ -221,6 +229,7 @@ public class Jogo extends javax.swing.JFrame {
             xAtualp2 = xInicialp2;
             yAtualp2 = yInicialp2;
             
+                if(flagJog){
                 if (teclasPressionadasJogador2.contains(KeyEvent.VK_RIGHT)) {
                 xAtualp2 +=7;
                 jogador2.setLocation(xAtualp2, yAtualp2);
@@ -313,6 +322,7 @@ public class Jogo extends javax.swing.JFrame {
                 jogchutando2 = false;
                 atualizarImagem();
             }
+                }
         }
     
     
@@ -321,15 +331,38 @@ public class Jogo extends javax.swing.JFrame {
         Rectangle retanguloJogador1 = jogador1.getBounds();
         Rectangle retanguloJogador2 = jogador2.getBounds();
         Rectangle retanguloBola = bola.getBounds();
-
-        if (retanguloJogador1.intersects(retanguloBola) || retanguloJogador2.intersects(retanguloBola)) {
+        if(colisaoComBola(jogador1, bola) && (colisaoComJogador(jogador1, jogador2))){
+                
+        }else if(retanguloJogador1.intersects(retanguloBola) || retanguloJogador2.intersects(retanguloBola)) {
             // Houve uma colisão entre um dos jogadores e a bola
             moverBola(); // Chame o método para mover a bola ou realizar ações relacionadas à colisão
         }
+        if(colisaoComJogador(jogador1, jogador2)){
+                // Verifique a direção do movimento do jogador1 (por exemplo, para a direita)
+            if (jogdireita1) {
+                // Impedir que jogador1 se mova para a direita (reverta o movimento)
+                jogador1.setLocation(jogador1.getX() - 5, jogador1.getY());
+            } else if (jogesquerda1) {
+                // Impedir que jogador1 se mova para a esquerda (reverta o movimento)
+                jogador1.setLocation(jogador1.getX() + 5, jogador1.getY());
+            }
+
+            // Verifique a direção do movimento do jogador2 (por exemplo, para a direita)
+            if (jogdireita2) {
+                // Impedir que jogador2 se mova para a direita (reverta o movimento)
+                jogador2.setLocation(jogador2.getX() - 5, jogador2.getY());
+            } else if (jogesquerda2) {
+                // Impedir que jogador2 se mova para a esquerda (reverta o movimento)
+                jogador2.setLocation(jogador2.getX() + 5, jogador2.getY());
+            }
+        }
+        if(colisaoComGol(bola, gol1)){
+            gol();
+        }else if(colisaoComGol(bola, gol2)){
+            gol();
+        }
         }
         
-            
-                
         void moverBola() {
             
         int larguraDaJanela = getWidth();
@@ -363,19 +396,45 @@ public class Jogo extends javax.swing.JFrame {
         velocidadeY = -velocidadeY;
     }
 
-    // Atualize a posição da bola na tela
-    bola.setLocation(bolaX, bolaY);
-
+        // Atualize a posição da bola na tela
+        bola.setLocation(bolaX, bolaY);
+        bolaXat = bolaX;
+        bolaYat = bolaY;
+        if(flagJog){
         if (colisaoComBola(jogador1, bola)) {
             if(jogdireita1){
                 jogesquerda1 = false;
                 bolaX += 10;
                 bola.setLocation(bolaX, bolaY); 
                 if(jogchutando1){
-                /*AnimacaoChute animacaoChute = new AnimacaoChute(bolaX, bolaY);
-                Timer subidaTimer = new Timer(50, animacaoChute.getActionListener());
-                subidaTimer.start();*/
-                }
+                    Timer chuteTimer = new Timer(50, new ActionListener() {
+                    double deltaY = -6; // Velocidade vertical negativa para subir
+                    double deltaX = 6; // Velocidade horizontal positiva para mover para a direita
+
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        // Atualize as posições vertical e horizontal da bola para fazê-la se mover na diagonal
+                        bolaYat += deltaY;
+                        bolaXat += deltaX;
+                        bola.setLocation((int) bolaXat, (int) bolaYat);
+
+                        // Verifique se a bola atingiu a altura desejada
+                        if (bolaYat <= 550) {
+                            deltaY = 4; // Altere a velocidade vertical para fazer a bola cair
+                        }
+
+                        // Verifique se a bola atingiu a altura final desejada
+                        if (bolaYat >= 680) {
+                            bolaYat = 680;
+                            // Pare o Timer quando a bola atingir a altura final desejada
+                            ((Timer) e.getSource()).stop();
+                        }
+                    }
+                });
+
+                // Inicie o Timer de chute
+                chuteTimer.start();
+            }
             }else if(jogesquerda1){
                 jogdireita1 = false;
                 bolaX -=10;
@@ -387,32 +446,99 @@ public class Jogo extends javax.swing.JFrame {
                 bolaX += 10;
                 bola.setLocation(bolaX, bolaY);
                 if(jogchutando2){
-                 bolaX += 30;
-                bolaY -= 20;
-                bola.setLocation(bolaX, bolaY);
+                    bolaX += 30;
+                    bolaY -= 20;
+                    bola.setLocation(bolaX, bolaY);
                 }
             }else if(jogesquerda2){
                 jogdireita2 = false;
                 bolaX -=10;
                 bola.setLocation(bolaX, bolaY);
                 if(jogchutando2){
-                    bolaX -= 30;
-                    bolaY -= 20;
-                    bola.setLocation(bolaX, bolaY);
+                    Timer chuteTimer = new Timer(50, new ActionListener() {
+                    double deltaY = -6; // Velocidade vertical negativa para subir
+                    double deltaX = -6; // Velocidade horizontal positiva para mover para a direita
+
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        // Atualize as posições vertical e horizontal da bola para fazê-la se mover na diagonal
+                        bolaYat += deltaY;
+                        bolaXat += deltaX;
+                        bola.setLocation((int) bolaXat, (int) bolaYat);
+
+                        // Verifique se a bola atingiu a altura desejada
+                        if (bolaYat <= 550) {
+                            deltaY = 4; // Altere a velocidade vertical para fazer a bola cair
+                        }
+
+                        // Verifique se a bola atingiu a altura final desejada
+                        if (bolaYat >= 680) {
+                            bolaYat = 680;
+                            // Pare o Timer quando a bola atingir a altura final desejada
+                            ((Timer) e.getSource()).stop();
+                        }
+                    }
+                });
+
+                // Inicie o Timer de chute
+                chuteTimer.start();
                 }
             }
         }
-        
-        if(colisaoComJogador(jogador1, jogador2)){
-            
         }
+        
     }
+       void gol(){
+           try {
+            File audioFile = new File("C:\\Users\\bruno\\OneDrive\\Documentos\\NetBeansProjects\\HeadFootball\\src\\main\\java\\res\\GritoGolLuisRoberto.wav");
+            AudioInputStream audioStream = AudioSystem.getAudioInputStream(audioFile);
+
+            // Crie um Clip para reproduzir o som
+            Clip clip = AudioSystem.getClip();
+            clip.open(audioStream);
+
+            // Verifique a colisão com o gol e reproduza o som quando necessário
+            if (colisaoComGol(bola, gol1)) {
+                clip.start(); // Inicie a reprodução do som
+                flagJog = false;
+                jogador1.setLocation(120, 620);
+                jogador2.setLocation(1060, 620);
+                bola.setLocation(660, 680);
+            } else if (colisaoComGol(bola, gol2)) {
+                clip.start(); // Inicie a reprodução do som
+                flagJog = false;
+                jogador1.setLocation(120, 620);
+                jogador2.setLocation(1060, 620);
+                bola.setLocation(660, 680);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            // Lidar com erros de carregamento ou reprodução do som
+        }
+            int duracao = 5000; // Defina a duração do seu áudio em milissegundos
+
+        Timer timer = new Timer(duracao, new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                // O áudio terminou de tocar aqui
+                // Permita que os jogadores se movam novamente
+                flagJog = true;
+            }
+        });
+
+    timer.setRepeats(false); // O timer só precisa ser acionado uma vez
+    timer.start();
+       }
+        
 
     boolean colisaoComBola(JLabel jogador, JLabel bola) {
         return jogador.getBounds().intersects(bola.getBounds());
     }
     boolean colisaoComJogador(JLabel jogador1, JLabel jogador2){
         return jogador1.getBounds().intersects(jogador2.getBounds());
+    }
+    boolean colisaoComGol(JLabel bola, JLabel gol){
+        return bola.getBounds().intersects(gol.getBounds());
     }
     
 
@@ -490,6 +616,8 @@ public class Jogo extends javax.swing.JFrame {
         time1 = new javax.swing.JLabel();
         time2 = new javax.swing.JLabel();
         placar = new javax.swing.JLabel();
+        gol2 = new javax.swing.JLabel();
+        gol1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -511,6 +639,10 @@ public class Jogo extends javax.swing.JFrame {
         placar.setIcon(new javax.swing.ImageIcon("C:\\Users\\bruno\\OneDrive\\Documentos\\NetBeansProjects\\HeadFootball\\src\\main\\java\\res\\placar.PNG")); // NOI18N
         getContentPane().add(placar);
         placar.setBounds(0, -10, 276, 250);
+        getContentPane().add(gol2);
+        gol2.setBounds(1330, 550, 70, 240);
+        getContentPane().add(gol1);
+        gol1.setBounds(0, 550, 70, 240);
 
         jLabel2.setIcon(new javax.swing.ImageIcon("C:\\Users\\bruno\\OneDrive\\Documentos\\NetBeansProjects\\HeadFootball\\src\\main\\java\\res\\fundojogo.jpg")); // NOI18N
         getContentPane().add(jLabel2);
@@ -556,6 +688,8 @@ public class Jogo extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel bola;
+    private javax.swing.JLabel gol1;
+    private javax.swing.JLabel gol2;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jogador1;
     private javax.swing.JLabel jogador2;
