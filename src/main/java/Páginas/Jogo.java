@@ -32,32 +32,39 @@ import javax.swing.Timer;
  * @author bruno
  */
 public class Jogo extends javax.swing.JFrame {
+    //Flags
     boolean jogoEmExecucao = true;
-    int velocidadeX = 10;
-    int velocidadeY = 5;
-    private Set<Integer> teclasPressionadasJogador1 = new HashSet<>();
-    private Set<Integer> teclasPressionadasJogador2 = new HashSet<>();
+    boolean flagJog = true;
     boolean pulando1 = false;
-    int puloY1 = 0;
-    int velocidadeSalto1 = -30;
-    int gravidade1 = 2; 
     boolean pulando2 = false;
-    int puloY2 = 0;
-    int velocidadeSalto2 = -30;
-    int gravidade2 = 2; 
-    int xAtualp1;
-    int yAtualp1;
-    int xAtualp2;
-    int yAtualp2;     
     boolean jogdireita1;
     boolean jogesquerda1;
     boolean jogdireita2;
     boolean jogesquerda2;
     boolean jogchutando1;
     boolean jogchutando2;
+    //Array de teclas pressionadas
+    private Set<Integer> teclasPressionadasJogador1 = new HashSet<>();
+    private Set<Integer> teclasPressionadasJogador2 = new HashSet<>();
+    //Valores para animação
+    int velocidadeX = 10;
+    int velocidadeY = 5;
+    int puloY1 = 0;
+    int velocidadeSalto1 = -30;
+    int gravidade1 = 2; 
+    int puloY2 = 0;
+    int velocidadeSalto2 = -30;
+    int gravidade2 = 2; 
+    //Atributos utilizados para armazenar o valor atual de um componente
+    int xAtualp1;
+    int yAtualp1;
+    int xAtualp2;
+    int yAtualp2;     
     int bolaYat;
     int bolaXat;
-    boolean flagJog = true;
+    //Contagem placares
+    int count1 = 0;
+    int count2 = 0; 
     
     /**
      * Creates new form Jogo
@@ -67,6 +74,7 @@ public class Jogo extends javax.swing.JFrame {
         setLocationRelativeTo(null); 
         setResizable(false);
         GameState gameState = GameState.getInstance();
+        placar(); 
         if (!gameState.getPersonagensEscolhidos().isEmpty()) {
             Personagem personagem = gameState.getPersonagensEscolhidos().get(0);
             if (personagem != null && personagem.getImagem() != null) {
@@ -358,15 +366,17 @@ public class Jogo extends javax.swing.JFrame {
         }
         if(colisaoComGol(bola, gol1)){
             gol();
+            placar();
         }else if(colisaoComGol(bola, gol2)){
             gol();
+            placar();
         }
         }
         
         void moverBola() {
             
-        int larguraDaJanela = getWidth();
-        int alturaDaJanela = getHeight();
+        int larguraDaJanela = 1350;
+        int alturaDaJanela = 788;
 
         int bolaX = bola.getX();
         int bolaY = bola.getY();
@@ -378,16 +388,15 @@ public class Jogo extends javax.swing.JFrame {
 
            // Verifique se a bola atingiu o limite esquerdo ou direito da tela
     if (bolaX < 0 || bolaX + larguraDaBola > larguraDaJanela) {
-        // A bola atingiu um dos limites laterais, inverta a velocidade horizontal
         velocidadeX = -velocidadeX;
 
-        // Verifique se a bola está no lado esquerdo ou direito da tela
+        // Verifique se a bola está no lado esquerdo ou direito da tela e reposicione-a no centro
         if (bolaX < 0) {
             // A bola atingiu o limite esquerdo da tela, mova-a para o centro
-            bolaX = larguraDaJanela / 4; // Defina a nova posição X
+            bolaX = 660;
         } else {
             // A bola atingiu o limite direito da tela, mova-a para o centro
-            bolaX = 3 * larguraDaJanela / 4; // Defina a nova posição X
+            bolaX = 660;
         }
     }
 
@@ -416,8 +425,11 @@ public class Jogo extends javax.swing.JFrame {
                         // Atualize as posições vertical e horizontal da bola para fazê-la se mover na diagonal
                         bolaYat += deltaY;
                         bolaXat += deltaX;
+                        if(bolaXat > 1350){
+                            bola.setLocation(660, 680);
+                        }else{
                         bola.setLocation((int) bolaXat, (int) bolaYat);
-
+                        }
                         // Verifique se a bola atingiu a altura desejada
                         if (bolaYat <= 550) {
                             deltaY = 4; // Altere a velocidade vertical para fazer a bola cair
@@ -464,8 +476,11 @@ public class Jogo extends javax.swing.JFrame {
                         // Atualize as posições vertical e horizontal da bola para fazê-la se mover na diagonal
                         bolaYat += deltaY;
                         bolaXat += deltaX;
+                        if(bolaXat < 0){
+                            bola.setLocation(660, 680);
+                        }else{
                         bola.setLocation((int) bolaXat, (int) bolaYat);
-
+                        }
                         // Verifique se a bola atingiu a altura desejada
                         if (bolaYat <= 550) {
                             deltaY = 4; // Altere a velocidade vertical para fazer a bola cair
@@ -521,15 +536,38 @@ public class Jogo extends javax.swing.JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 // O áudio terminou de tocar aqui
-                // Permita que os jogadores se movam novamente
                 flagJog = true;
             }
         });
-
-    timer.setRepeats(false); // O timer só precisa ser acionado uma vez
-    timer.start();
+        timer.setRepeats(false); // O timer só precisa ser acionado uma vez
+        timer.start();
        }
         
+       void placar(){
+           ImageIcon zero = new ImageIcon("C:\\Users\\bruno\\OneDrive\\Documentos\\NetBeansProjects\\HeadFootball\\src\\main\\java\\res\\num0.png");
+           ImageIcon um = new ImageIcon("C:\\Users\\bruno\\OneDrive\\Documentos\\NetBeansProjects\\HeadFootball\\src\\main\\java\\res\\num1.png");
+           ImageIcon dois = new ImageIcon("C:\\Users\\bruno\\OneDrive\\Documentos\\NetBeansProjects\\HeadFootball\\src\\main\\java\\res\\num2.png");
+           ImageIcon tres = new ImageIcon("C:\\Users\\bruno\\OneDrive\\Documentos\\NetBeansProjects\\HeadFootball\\src\\main\\java\\res\\num3.png");
+           if(count1 == 0 && count2 == 0){
+               num1placar.setIcon(zero);
+               num2placar.setIcon(zero);
+           }
+           if(count1 == 1){
+                num2placar.setIcon(um);
+           }else if(count1 == 2){
+               num2placar.setIcon(dois);
+           }else if(count1 == 3){
+               num2placar.setIcon(tres);
+           }
+           
+           if(count2 == 1){
+               num1placar.setIcon(um);
+           }else if(count2 == 2){
+               num1placar.setIcon(dois);
+           }else if(count2 == 3){
+               num1placar.setIcon(tres);
+           }
+       }
 
     boolean colisaoComBola(JLabel jogador, JLabel bola) {
         return jogador.getBounds().intersects(bola.getBounds());
@@ -580,10 +618,7 @@ public class Jogo extends javax.swing.JFrame {
             
             verificarColisoes();
 
-            // Renderize a tela
-            // ...
 
-            // Adicione uma pequena pausa para controlar a taxa de atualização do loop
             try {
                 Thread.sleep(16); // Isso atualiza o jogo aproximadamente a 60 quadros por segundo
             } catch (InterruptedException e) {
@@ -615,6 +650,8 @@ public class Jogo extends javax.swing.JFrame {
         jogador2 = new javax.swing.JLabel();
         time1 = new javax.swing.JLabel();
         time2 = new javax.swing.JLabel();
+        num2placar = new javax.swing.JLabel();
+        num1placar = new javax.swing.JLabel();
         placar = new javax.swing.JLabel();
         gol2 = new javax.swing.JLabel();
         gol1 = new javax.swing.JLabel();
@@ -635,6 +672,10 @@ public class Jogo extends javax.swing.JFrame {
         time1.setBounds(10, 10, 170, 60);
         getContentPane().add(time2);
         time2.setBounds(10, 90, 170, 60);
+        getContentPane().add(num2placar);
+        num2placar.setBounds(190, 90, 80, 70);
+        getContentPane().add(num1placar);
+        num1placar.setBounds(190, 0, 80, 70);
 
         placar.setIcon(new javax.swing.ImageIcon("C:\\Users\\bruno\\OneDrive\\Documentos\\NetBeansProjects\\HeadFootball\\src\\main\\java\\res\\placar.PNG")); // NOI18N
         getContentPane().add(placar);
@@ -693,6 +734,8 @@ public class Jogo extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jogador1;
     private javax.swing.JLabel jogador2;
+    private javax.swing.JLabel num1placar;
+    private javax.swing.JLabel num2placar;
     private javax.swing.JLabel placar;
     private javax.swing.JLabel time1;
     private javax.swing.JLabel time2;
