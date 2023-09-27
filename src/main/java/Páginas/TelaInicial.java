@@ -23,10 +23,6 @@ public class TelaInicial extends javax.swing.JFrame {
         initComponents();
         setLocationRelativeTo(null); 
         setResizable(false);
-       /* setExtendedState(JFrame.MAXIMIZED_BOTH);
-        setLayout(new GridLayout());
-        tela = new FundoTela("C:\\\\Users\\\\bruno\\\\OneDrive\\\\Documentos\\\\NetBeansProjects\\\\HeadFootball\\\\src\\\\main\\\\java\\\\res\\\\menu (2).png");
-        getContentPane().add(tela);*/
     }
 
     /**
@@ -64,7 +60,7 @@ public class TelaInicial extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void iniciarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_iniciarActionPerformed
-        new Usuario().setVisible(true);
+        new Carregamento().setVisible(true);
         dispose();
     }//GEN-LAST:event_iniciarActionPerformed
 

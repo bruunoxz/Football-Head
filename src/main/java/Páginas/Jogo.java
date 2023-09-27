@@ -37,6 +37,8 @@ public class Jogo extends javax.swing.JFrame {
     boolean flagJog = true;
     boolean pulando1 = false;
     boolean pulando2 = false;
+    boolean colisao1 = false;
+    boolean colisao2 = false;
     boolean jogdireita1;
     boolean jogesquerda1;
     boolean jogdireita2;
@@ -63,8 +65,8 @@ public class Jogo extends javax.swing.JFrame {
     int bolaYat;
     int bolaXat;
     //Contagem placares
-    int count1 = 0;
-    int count2 = 0; 
+    int count1;
+    int count2; 
     
     /**
      * Creates new form Jogo
@@ -74,6 +76,8 @@ public class Jogo extends javax.swing.JFrame {
         setLocationRelativeTo(null); 
         setResizable(false);
         GameState gameState = GameState.getInstance();
+        count1 = 0;
+        count2 = 0;
         placar(); 
         if (!gameState.getPersonagensEscolhidos().isEmpty()) {
             Personagem personagem = gameState.getPersonagensEscolhidos().get(0);
@@ -366,10 +370,36 @@ public class Jogo extends javax.swing.JFrame {
         }
         if(colisaoComGol(bola, gol1)){
             gol();
-            placar();
+            if(count1 == 0 && colisao1 == true){
+                count1 = 1;
+                placar();
+                colisao1 = false;
+            }else if(count1 == 1 && colisao1 == true){
+                count1 = 2;
+                placar();
+                colisao1 = false;
+            }else if(count1 == 2 && colisao1 == true){
+                count2 = 3;
+                placar();
+                colisao1 = false;
+            }
         }else if(colisaoComGol(bola, gol2)){
             gol();
-            placar();
+                if(count2 == 0 && colisao1 == true){
+                count2 = 1;
+                placar();
+                colisao1 = false;
+            }else if(count2 == 1 && colisao1 == true){
+                count2 = 2;
+                placar();
+                colisao1 = false;
+            }else if(count1 == 2 && colisao1 == true){
+                count2 = 3;
+                placar();
+                colisao1 = false;
+            }
+        }else{
+            colisao1 = true;
         }
         }
         
@@ -409,6 +439,7 @@ public class Jogo extends javax.swing.JFrame {
         bola.setLocation(bolaX, bolaY);
         bolaXat = bolaX;
         bolaYat = bolaY;
+        
         if(flagJog){
         if (colisaoComBola(jogador1, bola)) {
             if(jogdireita1){
@@ -519,6 +550,7 @@ public class Jogo extends javax.swing.JFrame {
                 jogador1.setLocation(120, 620);
                 jogador2.setLocation(1060, 620);
                 bola.setLocation(660, 680);
+                placar();
             } else if (colisaoComGol(bola, gol2)) {
                 clip.start(); // Inicie a reprodução do som
                 flagJog = false;

@@ -81,6 +81,7 @@ public class Usuario extends javax.swing.JFrame {
                 new AtleticoMg().setVisible(true); 
                 dispose();
             }else{
+                
                 con.insertValues(user1.getText(), 0, 0, 0);
                 con.insertValues(user2.getText(), 0, 0, 0);
                 new AtleticoMg().setVisible(true);
