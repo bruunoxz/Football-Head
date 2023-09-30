@@ -67,6 +67,8 @@ public class Jogo extends javax.swing.JFrame {
     //Contagem placares
     int count1;
     int count2; 
+    GameState gameState = GameState.getInstance();
+    Resultado resultado = new Resultado();
     
     /**
      * Creates new form Jogo
@@ -75,10 +77,18 @@ public class Jogo extends javax.swing.JFrame {
         initComponents();
         setLocationRelativeTo(null); 
         setResizable(false);
-        GameState gameState = GameState.getInstance();
         count1 = 0;
         count2 = 0;
         placar(); 
+        
+        Timer timer = new Timer(120000, new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                encerrarJogo();
+            }
+        });
+        timer.start();
+        
         if (!gameState.getPersonagensEscolhidos().isEmpty()) {
             Personagem personagem = gameState.getPersonagensEscolhidos().get(0);
             if (personagem != null && personagem.getImagem() != null) {
@@ -289,11 +299,10 @@ public class Jogo extends javax.swing.JFrame {
                                // Verifica se o jogador atingiu o solo
                                if (yAtualp2 >= yInicialp2) {
                                    yAtualp2 = yInicialp2;
-                                   pulando2 = false; // O jogador parou de pular
-                                   ((Timer) e.getSource()).stop(); // Para o temporizador
+                                   pulando2 = false;
+                                   ((Timer) e.getSource()).stop(); 
                                }
 
-                               // Atualiza a posição do jogador1
                                jogador2.setLocation(xAtualp2, yAtualp2);
                            }
                        });
@@ -370,36 +379,8 @@ public class Jogo extends javax.swing.JFrame {
         }
         if(colisaoComGol(bola, gol1)){
             gol();
-            if(count1 == 0 && colisao1 == true){
-                count1 = 1;
-                placar();
-                colisao1 = false;
-            }else if(count1 == 1 && colisao1 == true){
-                count1 = 2;
-                placar();
-                colisao1 = false;
-            }else if(count1 == 2 && colisao1 == true){
-                count2 = 3;
-                placar();
-                colisao1 = false;
-            }
         }else if(colisaoComGol(bola, gol2)){
             gol();
-                if(count2 == 0 && colisao1 == true){
-                count2 = 1;
-                placar();
-                colisao1 = false;
-            }else if(count2 == 1 && colisao1 == true){
-                count2 = 2;
-                placar();
-                colisao1 = false;
-            }else if(count1 == 2 && colisao1 == true){
-                count2 = 3;
-                placar();
-                colisao1 = false;
-            }
-        }else{
-            colisao1 = true;
         }
         }
         
@@ -526,7 +507,6 @@ public class Jogo extends javax.swing.JFrame {
                     }
                 });
 
-                // Inicie o Timer de chute
                 chuteTimer.start();
                 }
             }
@@ -539,39 +519,39 @@ public class Jogo extends javax.swing.JFrame {
             File audioFile = new File("C:\\Users\\bruno\\OneDrive\\Documentos\\NetBeansProjects\\HeadFootball\\src\\main\\java\\res\\GritoGolLuisRoberto.wav");
             AudioInputStream audioStream = AudioSystem.getAudioInputStream(audioFile);
 
-            // Crie um Clip para reproduzir o som
             Clip clip = AudioSystem.getClip();
             clip.open(audioStream);
 
-            // Verifique a colisão com o gol e reproduza o som quando necessário
+            if(flagJog){
             if (colisaoComGol(bola, gol1)) {
                 clip.start(); // Inicie a reprodução do som
                 flagJog = false;
                 jogador1.setLocation(120, 620);
                 jogador2.setLocation(1060, 620);
                 bola.setLocation(660, 680);
-                placar();
+                count1++;
             } else if (colisaoComGol(bola, gol2)) {
                 clip.start(); // Inicie a reprodução do som
                 flagJog = false;
                 jogador1.setLocation(120, 620);
                 jogador2.setLocation(1060, 620);
                 bola.setLocation(660, 680);
+                count2++;
+            }
             }
         } catch (Exception e) {
             e.printStackTrace();
-            // Lidar com erros de carregamento ou reprodução do som
         }
-            int duracao = 5000; // Defina a duração do seu áudio em milissegundos
+            int duracao = 5000; 
 
         Timer timer = new Timer(duracao, new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                // O áudio terminou de tocar aqui
                 flagJog = true;
+                placar();
             }
         });
-        timer.setRepeats(false); // O timer só precisa ser acionado uma vez
+        timer.setRepeats(false); 
         timer.start();
        }
         
@@ -590,6 +570,9 @@ public class Jogo extends javax.swing.JFrame {
                num2placar.setIcon(dois);
            }else if(count1 == 3){
                num2placar.setIcon(tres);
+               resultado.setResultadoImage(new ImageIcon("C:\\Users\\bruno\\OneDrive\\Documentos\\NetBeansProjects\\HeadFootball\\src\\main\\java\\res\\Player2wins.png"));
+               resultado.setVisible(true);
+               dispose();
            }
            
            if(count2 == 1){
@@ -598,6 +581,9 @@ public class Jogo extends javax.swing.JFrame {
                num1placar.setIcon(dois);
            }else if(count2 == 3){
                num1placar.setIcon(tres);
+               resultado.setResultadoImage(new ImageIcon("C:\\Users\\bruno\\OneDrive\\Documentos\\NetBeansProjects\\HeadFootball\\src\\main\\java\\res\\Player1wins.png"));
+               resultado.setVisible(true);
+               dispose();
            }
        }
 
@@ -618,7 +604,6 @@ public class Jogo extends javax.swing.JFrame {
             Personagem personagem = gameState.getPersonagensEscolhidos().get(0);
             Personagem personagem2 = gameState.getPersonagensEscolhidos().get(1);
             if (personagem != null && personagem2 != null) {
-                // Obter a imagem2 do personagem
                 ImageIcon chutep1 = personagem.getImagem2();
                 ImageIcon chutep2 = personagem2.getImagem2();
                 if (jogchutando1 && chutep1 != null) {
@@ -634,10 +619,14 @@ public class Jogo extends javax.swing.JFrame {
             }
         }
     }
-    
+    private void encerrarJogo(){
+                 resultado.setResultadoImage(new ImageIcon("C:\\Users\\bruno\\OneDrive\\Documentos\\NetBeansProjects\\HeadFootball\\src\\main\\java\\res\\Empate.png"));
+                 resultado.setVisible(true);  
+                 dispose();
+       }
+
         private void iniciarLoopDoJogo() {
         while (jogoEmExecucao) {
-            // Atualize a lógica do jogo
             jogdireita1 = false;
             jogesquerda1 = false;
             jogdireita2 = false;
@@ -649,20 +638,15 @@ public class Jogo extends javax.swing.JFrame {
              processarTeclasJogador2();
             
             verificarColisoes();
-
+            
 
             try {
-                Thread.sleep(16); // Isso atualiza o jogo aproximadamente a 60 quadros por segundo
+                Thread.sleep(16); //atualiza o jogo aproximadamente a 60 quadros por segundo
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
         }
     }
-       private void encerrarJogo() {
-        // Execute qualquer lógica de encerramento necessária, como salvar progresso do jogo, etc.
-        jogoEmExecucao = false;
-        dispose(); // Feche o JFrame
-        }
     
 
 

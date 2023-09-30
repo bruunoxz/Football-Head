@@ -2,6 +2,7 @@ package Utilitários;
 
 import java.awt.List;
 import java.util.ArrayList;
+import javax.swing.ImageIcon;
 
 public class GameState{
     private static GameState instance = null;
