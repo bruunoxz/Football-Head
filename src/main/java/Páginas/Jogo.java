@@ -4,6 +4,7 @@
  */
 package Páginas;
 
+import Utilitários.ConectaMongo;
 import Utilitários.GameState;
 import Utilitários.Personagem;
 import java.awt.List;
@@ -556,6 +557,7 @@ public class Jogo extends javax.swing.JFrame {
        }
         
        void placar(){
+           ConectaMongo con = new ConectaMongo();
            ImageIcon zero = new ImageIcon("C:\\Users\\bruno\\OneDrive\\Documentos\\NetBeansProjects\\HeadFootball\\src\\main\\java\\res\\num0.png");
            ImageIcon um = new ImageIcon("C:\\Users\\bruno\\OneDrive\\Documentos\\NetBeansProjects\\HeadFootball\\src\\main\\java\\res\\num1.png");
            ImageIcon dois = new ImageIcon("C:\\Users\\bruno\\OneDrive\\Documentos\\NetBeansProjects\\HeadFootball\\src\\main\\java\\res\\num2.png");
@@ -572,6 +574,9 @@ public class Jogo extends javax.swing.JFrame {
                num2placar.setIcon(tres);
                resultado.setResultadoImage(new ImageIcon("C:\\Users\\bruno\\OneDrive\\Documentos\\NetBeansProjects\\HeadFootball\\src\\main\\java\\res\\Player2wins.png"));
                resultado.setVisible(true);
+               //con.updateField(gameState.getUser1(), "vitorias", con.getVitorias(gameState.getUser1()+1));
+               con.incrementVitorias(gameState.getUser1());
+               con.incrementDerrotas(gameState.getUser2());
                dispose();
            }
            
@@ -583,6 +588,8 @@ public class Jogo extends javax.swing.JFrame {
                num1placar.setIcon(tres);
                resultado.setResultadoImage(new ImageIcon("C:\\Users\\bruno\\OneDrive\\Documentos\\NetBeansProjects\\HeadFootball\\src\\main\\java\\res\\Player1wins.png"));
                resultado.setVisible(true);
+               con.incrementVitorias(gameState.getUser1());
+               con.incrementDerrotas(gameState.getUser2());
                dispose();
            }
        }

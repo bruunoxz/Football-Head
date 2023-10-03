@@ -5,6 +5,7 @@
 package Páginas;
 
 import Utilitários.ConectaMongo;
+import Utilitários.GameState;
 import javax.swing.JOptionPane;
 
 /**
@@ -73,18 +74,22 @@ public class Usuario extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void proxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_proxActionPerformed
+        GameState gameState = GameState.getInstance();
         if(user1.getText().isEmpty() || user2.getText().isEmpty()){
             JOptionPane.showMessageDialog(this, "Os dois usuários precisam ser preenchidos", "Informação", JOptionPane.INFORMATION_MESSAGE);
         }else{
             ConectaMongo con = new ConectaMongo();
             if(con.userExists(user1.getText()) && con.userExists(user2.getText())){
-                new AtleticoMg().setVisible(true); 
+                new AtleticoMg().setVisible(true);
+                gameState.setUser1(user1.getText());
+                gameState.setUser2(user2.getText());
                 dispose();
             }else{
-                
                 con.insertValues(user1.getText(), 0, 0, 0);
                 con.insertValues(user2.getText(), 0, 0, 0);
                 new AtleticoMg().setVisible(true);
+                gameState.setUser1(user1.getText());
+                gameState.setUser2(user2.getText());
                 dispose();
             }
         }
